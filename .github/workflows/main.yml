@@ -4,8 +4,7 @@ name: Kyma - Tests us30 - block 02
 # This is why not matrix strategy is used
 # The steps of a job must execute in any case, so we use always()
 
-on:
-  workflow_dispatch:
+on: push
 
 # variables used by all jobs
 env:
@@ -18,3 +17,18 @@ jobs:
       image: shivakumarp12/btp-setup-automator:latest
       options: --user root
 
+    # variables used only by the job integration-test, move to global, if cleanup or log job need them too
+    env:
+      BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
+      BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
+      BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
+      USE_CASES: ${{ github.workspace }}/output/use-cases
+      
+    steps:
+      - name: 'Preparing test environment for entitlement tests'
+        if: ${{ success() }} || ${{ failure() }}
+        working-directory: /home/user
+        shell: bash
+        run: |
+          ./btpsa --help
+        
