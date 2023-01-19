@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "destination",
+      "plan": "lite",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "destination-lite"
+      ],
+      "api_resource_uri": {
+        "testapi": "/destination-configuration/v1/subaccountDestinations",
+        "apiBaseUrlPathKey": "data.uri",
+        "oauthurlPathkey": "data.url",
+        "clientId_basicUN_PathKey": "data.clientid",
+        "clientSecret_basicPW_PathKey": "data.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-171"
+      }
+    }
+  ]
+}
