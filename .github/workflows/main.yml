@@ -8,7 +8,7 @@ on: push
 
 # variables used by all jobs
 env:
-  K8S_NAMESPACE: servicens
+  K8S_NAMESPACE: btpsa
 
 jobs:
   integration-test:
@@ -28,8 +28,11 @@ jobs:
       - name: 'Preparing environment'
         working-directory: /home/user
         shell: bash
+        env:
+          KUBECONFIG: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
         run: |
-          ${{env.SERVICE_ACCOUNT_KYMA}} > kubeconfig.yaml
+          ls -la
+          "$KUBECONFIG" > kubeconfig.yaml
           export KUBECONFIG=./kubeconfig.yaml
           kubectl get ns
           python3 btpsa --help
