@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-parameters.json",
+  "loginmethod": "envVariables",
+  "region": "us20",
+  "pruneusecase": true,
+  "rundefaulttests": false,
+  "myusergroups": [
+    {
+      "name": "admins",
+      "members": [
+        "shivakumar.prabhuswamy@sap.com"
+      ]
+    }
+  ],
+  "btpcliapihostregion":"eu10",
+  "subaccountname": "EasyFranchiseKymaOp2Cw43Akanksha",
+  "subaccountid": "72a8e34e-b4eb-42e6-8463-ec103b4e5f71"
+}
