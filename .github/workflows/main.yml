@@ -23,17 +23,29 @@ jobs:
       BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
       BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
       USE_CASES: ${{ github.workspace }}/output/use-cases
+      KUBECONFIG_PATH: ${{ github.workspace }}/.kube/serviceaccount.yaml 
       
     steps:
+      - name: store kubeconfig
+        shell: bash
+        run: |
+          mkdir -p ${{ github.workspace }}/.kube && \
+          chown 777 ${{ github.workspace }}/.kube && \
+          printf "${{ secrets.SERVICE_ACCOUNT_KYMA1 }}" > ${{ env.KUBECONFIG_PATH }}
+      - name: Authenticate with Kubernetes
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
+      - name: Check connection
+        shell: bash
+        run: |
+          kubectl get ns        
+          
       - name: 'Preparing environment'
         working-directory: /home/user
         shell: bash
-        env:
-          KUBECONFIG: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
         run: |
-          echo $KUBECONFIG > kubeconfig.yaml
-          ls -sh
-          export KUBECONFIG=kubeconfig.yaml
           kubectl get ns
           python3 btpsa --help
           
