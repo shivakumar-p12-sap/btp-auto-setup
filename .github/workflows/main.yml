@@ -31,8 +31,7 @@ jobs:
         env:
           KUBECONFIG: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
         run: |
-          ls -la
-          "$KUBECONFIG" > kubeconfig.yaml
+          echo $KUBECONFIG > kubeconfig.yaml
           export KUBECONFIG=./kubeconfig.yaml
           kubectl get ns
           python3 btpsa --help
