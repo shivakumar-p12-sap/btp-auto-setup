@@ -4,7 +4,8 @@ name: Kyma Btpsa
 # This is why not matrix strategy is used
 # The steps of a job must execute in any case, so we use always()
 
-on: push
+on:
+  workflow_dispatch:
 
 # variables used by all jobs
 env:
