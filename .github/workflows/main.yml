@@ -1,4 +1,4 @@
-name: Kyma - Tests us30 - block 02
+name: Kyma Btpsa
 # This file represents a complete version of the "BTP Setup Automator" integration tests
 # All tests are executed in sequence on one BTP account to avoid entitlement limits
 # This is why not matrix strategy is used
@@ -25,10 +25,13 @@ jobs:
       USE_CASES: ${{ github.workspace }}/output/use-cases
       
     steps:
-      - name: 'Preparing test environment for entitlement tests'
-        if: ${{ success() }} || ${{ failure() }}
+      - name: 'Preparing environment'
         working-directory: /home/user
         shell: bash
         run: |
+          ${{env.SERVICE_ACCOUNT_KYMA}} > kubeconfig.yaml
+          export KUBECONFIG=./kubeconfig.yaml
+          kubectl get ns
           python3 btpsa --help
+          
         
