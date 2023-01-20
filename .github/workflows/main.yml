@@ -23,7 +23,7 @@ jobs:
       BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
       BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
       BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
-      USE_CASES: ${{ github.workspace }}/output/use-cases
+      USE_CASES: ${{ github.workspace }}/use-cases
       KUBECONFIG_PATH: ${{ github.workspace }}/.kube/serviceaccount.yaml 
       
     steps:
@@ -33,8 +33,10 @@ jobs:
           mkdir -p ${{ github.workspace }}/.kube && \
           chown 777 ${{ github.workspace }}/.kube && \
           printf "${{ secrets.SERVICE_ACCOUNT_KYMA1 }}" > ${{ env.KUBECONFIG_PATH }}
+      - name: checkout repository
+        uses: actions/checkout@v2          
       - name: Authenticate with Kubernetes
-        uses: azure/k8s-set-context@v3
+        uses: azure/k8s-set-context@v2
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
@@ -43,11 +45,15 @@ jobs:
         run: |
           kubectl get ns        
           
-      - name: 'Preparing environment'
+      - name: 'Test service and API'
         working-directory: /home/user
         shell: bash
         run: |
-          kubectl get ns
           python3 btpsa --help
+          ls -la ${USE_CASES}
+          #-parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
+          #-usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-use-case.json" \
+          #-kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          #-k8snamespace ${{ env.K8S_NAMESPACE }} 
           
         
