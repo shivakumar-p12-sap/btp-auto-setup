@@ -62,6 +62,8 @@ jobs:
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
           cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
           cd btpsatest
+          git config --global user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "Test commit"
           git remote set-url --push origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
