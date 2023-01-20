@@ -30,5 +30,6 @@
         "serviceID": "SERVICE-171"
       }
     }
-  ]
+  ],
+  "enableAPITest": true
 }
