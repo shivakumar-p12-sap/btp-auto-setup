@@ -1,8 +1,4 @@
 name: Kyma Btpsa
-# This file represents a complete version of the "BTP Setup Automator" integration tests
-# All tests are executed in sequence on one BTP account to avoid entitlement limits
-# This is why not matrix strategy is used
-# The steps of a job must execute in any case, so we use always()
 
 on:
   workflow_dispatch:
@@ -23,7 +19,7 @@ jobs:
       BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
       BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
       BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
-      USE_CASES: ${{ github.workspace }}/use-cases
+      USE_CASES: ${{ github.workspace }}
       KUBECONFIG_PATH: ${{ github.workspace }}/.kube/serviceaccount.yaml 
       
     steps:
