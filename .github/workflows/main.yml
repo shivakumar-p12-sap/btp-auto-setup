@@ -49,10 +49,17 @@ jobs:
           -parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
           -usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-use-case.json" \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          -k8snamespace ${{ env.K8S_NAMESPACE }} && /
-          echo "post check" && /
-          cp /home/user/log/script.log /home/user/logs/k8s/report/ && /
-          cp /home/user/logs/k8s/report/* ${USE_CASES}/logs/ && /
-          cat ${USE_CASES}/logs/script.log
+          -k8snamespace ${{ env.K8S_NAMESPACE }} 
+          
+      - name: 'Upload reports'
+        working-directory: /home/user
+        shell: bash
+        run: |
+          git clone https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git && \
+          ls -la
+          #echo "post check" && /
+          #cp /home/user/log/script.log /home/user/logs/k8s/report/ && /
+          #cp /home/user/logs/k8s/report/* ${USE_CASES}/logs/ && /
+          #cat ${USE_CASES}/logs/script.log
           
         
