@@ -20,6 +20,7 @@ jobs:
       BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
       BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
       USE_CASES: ${{ github.workspace }}
+      GIT_TOOL_TOKEN: ${{ secrets.GIT_TOOL_TOKEN }}
       KUBECONFIG_PATH: ${{ github.workspace }}/.kube/serviceaccount.yaml 
       
     steps:
@@ -55,7 +56,7 @@ jobs:
         working-directory: /home/user
         shell: bash
         run: |
-          git clone https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git && \
+          git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git && \
           ls -la
           #echo "post check" && /
           #cp /home/user/log/script.log /home/user/logs/k8s/report/ && /
