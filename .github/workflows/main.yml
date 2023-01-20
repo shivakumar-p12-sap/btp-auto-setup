@@ -50,7 +50,8 @@ jobs:
         shell: bash
         run: |
           python3 btpsa --help
-          ls -la ${USE_CASES}
+          echo ${USE_CASES}
+          ls -la
           #-parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
           #-usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-use-case.json" \
           #-kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
