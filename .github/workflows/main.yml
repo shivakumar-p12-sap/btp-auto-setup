@@ -51,4 +51,8 @@ jobs:
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           
+          cp /home/user/log/script.log /home/user/logs/k8s/report/
+          cp /home/user/logs/k8s/report/* ${USE_CASES}/logs/
+          cat ${USE_CASES}/logs/script.log
+          
         
