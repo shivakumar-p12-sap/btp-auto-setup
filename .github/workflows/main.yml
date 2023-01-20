@@ -45,12 +45,10 @@ jobs:
         working-directory: /home/user
         shell: bash
         run: |
-          python3 btpsa --help
-          cat ${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json
-          ls -la
-          #-parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
-          #-usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-use-case.json" \
-          #-kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          #-k8snamespace ${{ env.K8S_NAMESPACE }} 
+          python3 btpsa \
+          -parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
+          -usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-use-case.json" \
+          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          -k8snamespace ${{ env.K8S_NAMESPACE }} 
           
         
