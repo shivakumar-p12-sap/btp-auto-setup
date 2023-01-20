@@ -2,7 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-parameters.json",
   "loginmethod": "envVariables",
   "region": "us20",
-  "pruneusecase": true,
   "rundefaulttests": false,
   "myusergroups": [
     {
