@@ -3,7 +3,7 @@ import os
 import json
 from pathlib import Path
 import fnmatch
-from libs.python.helperJson import getJsonFromFile
+from helperJson import getJsonFromFile
 
 json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
 
