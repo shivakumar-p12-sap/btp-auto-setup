@@ -42,7 +42,7 @@ jobs:
         run: |
           kubectl get ns        
           
-      - name: 'Test service and API'
+      - name: 'Test destination service and API'
         working-directory: /home/user
         shell: bash
         run: |
@@ -51,6 +51,20 @@ jobs:
           -usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-use-case.json" \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
+          cp /home/user/log/script.log /home/user/logs/k8s/report/destination-lite.log
+          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/destination-lite.json
+          
+      - name: 'Test xsuaa service and API'
+        working-directory: /home/user
+        shell: bash
+        run: |
+          python3 btpsa \
+          -parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
+          -usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-xsuaa-application-use-case.json" \
+          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          -k8snamespace ${{ env.K8S_NAMESPACE }} 
+          cp /home/user/log/script.log /home/user/logs/k8s/report/xsuaa-application.log
+          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/xsuaa-application.json          
           
       - name: 'Upload reports'
         working-directory: /home/user
