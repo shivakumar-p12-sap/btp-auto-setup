@@ -3,7 +3,6 @@ import os
 import json
 from pathlib import Path
 import fnmatch
-from helperJson import getJsonFromFile
 
 json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
 
@@ -28,3 +27,44 @@ with open(filename, 'w') as fh:
         h1="Cross Consumption Test Results",
         names=resultInfo
     ))
+
+def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserName=None, externalConfigPassword=None, externalConfigToken=None):
+    data = None
+    thisRequest = None
+    foundError = False
+    f = None
+
+    try:
+        # Opening JSON file
+        f = open(filename)
+        # returns JSON object as a dictionary
+        data = json.load(f)
+    except IOError:
+        message = "Can't open json file >" + filename + "<"
+        if log is not None:
+            log.error(message)
+        else:
+            print(message)
+        foundError = True
+    except ValueError as err:
+        message = "There is an issue in the json file >" + filename + \
+            "<. Issue starts on character position " + \
+            str(err.pos) + ": " + err.msg
+        if log is not None:
+            log.error(message)
+        else:
+            print(message)
+        foundError = True
+    finally:
+        if f is not None:
+            f.close()
+
+    if foundError is True:
+        message = "Can't run the use case before the error(s) mentioned above are not fixed"
+        if log is not None:
+            log.error(message)
+        else:
+            print(message)
+        sys.exit(os.EX_DATAERR)
+    return data
+    
