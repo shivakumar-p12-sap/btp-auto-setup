@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#results {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#results td, #results th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#results tr:nth-child(even){background-color: #f2f2f2;}
+
+#results tr:hover {background-color: #ddd;}
+
+#results th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<h1>{{ h1 }}</h1>
+<h4>{{ h4 }}</h4>
+<table id="results">
+  <tr>
+    <th>Slno</th>
+    <th>Service</th>
+    <th>Plan</th>
+    <th>Service ID</th>
+    <th>Method</th>
+    <th>Endpoint</th>
+    <th>Create Status</th>
+    <th>API Test Status</th>
+    <th>Log</th>
+  </tr>
+  {% for name in names %}
+  <tr>
+    <td>{{loop.index}}</td>
+    <td>{{ name.service }}</td>
+    <td>{{name.plan}}</td>
+    <td><a href="https://services.tools.sap/#/perspective/cross-consumption/service/{{name.serviceid}}" target="_blank">{{name.serviceid}}</a></td>
+    <td>GET</td>
+    <td>{{name.endpoint}}</td>
+    <td>{{name.creationStatus}}</td>
+    <td>{{name.status}}</td>
+    <td><a href="{{name.loglink}}" target="_blank">Log</a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
