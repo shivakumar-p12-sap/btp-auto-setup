@@ -4,6 +4,10 @@ import json
 from pathlib import Path
 import fnmatch
 
+import datetime as dt
+dt_India = dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
+Indian_time = dt_India.strftime('%d-%b-%y %H:%M:%S')
+
 
 def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserName=None, externalConfigPassword=None, externalConfigToken=None):
     data = None
@@ -45,13 +49,23 @@ def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserN
         sys.exit(os.EX_DATAERR)
     return data
 
+
 json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
 
 content = []
-filenames = json_files
-for filename in filenames:
+for filename in json_files:
     with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
-        content += json.load(f)
+        json_decoded = json.load(f)
+        logfile = filename.replace(".json", ".log" )
+        json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/'+logfile
+        source_logfile="/home/user/logs/k8s/report/"+logfile
+        with open(source_logfile, 'r') as file:
+          log_content = file.read()
+          if 'is now available' in log_content:
+            json_decoded[0]['creationStatus']='Pass'
+          else:
+            json_decoded[0]['creationStatus']='Failed'
+        content += json_decoded
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
     json.dump(content, f, indent=4)
 
@@ -66,6 +80,6 @@ template = templateEnv.get_template(templateBasename)
 with open(filename, 'w') as fh:
     fh.write(template.render(
         h1="Cross Consumption Test Results",
+        h4=Indian_time,
         names=resultInfo
     ))
-    
