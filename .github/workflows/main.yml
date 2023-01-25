@@ -83,7 +83,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Test commit"
+          git commit -m "Log Commit $(date +%F_%T)"
           git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
           git push
           
