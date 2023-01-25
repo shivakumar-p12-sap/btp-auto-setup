@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
+          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
           -usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-use-case.json" \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/SERVICE-kyma-destination-lite-parameters.json" \
+          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
           -usecasefile "${USE_CASES}/use_cases/SERVICE-kyma-xsuaa-application-use-case.json" \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
