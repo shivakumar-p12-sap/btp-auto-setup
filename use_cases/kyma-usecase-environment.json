@@ -1,0 +1,10 @@
+{
+  "category": "ENVIRONMENT",
+  "name": "kymaruntime",
+  "plan": "azure",
+  "amount": 1,
+  "parameters": {
+    "name": "kymaeu10-n3x822fu_kymaeu10",
+    "region": "eastus"
+  }
+}
