@@ -29,7 +29,7 @@
 <body>
 
 <h1>{{ h1 }}</h1>
-<h4>{{ h4 }}</h4>
+<h4>Last Execution Data&Time: {{ h4 }}</h4>
 <table id="results">
   <tr>
     <th>Slno</th>
@@ -40,6 +40,7 @@
     <th>Endpoint</th>
     <th>Create Status</th>
     <th>API Test Status</th>
+    <th>Delete Status</th>
     <th>Log</th>
   </tr>
   {% for name in names %}
@@ -52,6 +53,7 @@
     <td>{{name.endpoint}}</td>
     <td>{{name.creationStatus}}</td>
     <td>{{name.status}}</td>
+    <td>{{name.deleteStatus}}</td>
     <td><a href="{{name.loglink}}" target="_blank">Log</a></td>
   </tr>
   {% endfor %}
