@@ -61,10 +61,13 @@ for filename in json_files:
         source_logfile="/home/user/logs/k8s/report/"+logfile
         with open(source_logfile, 'r') as file:
           log_content = file.read()
+          json_decoded[0]['deleteStatus']='Failed'
           if 'is now available' in log_content:
             json_decoded[0]['creationStatus']='Pass'
           else:
             json_decoded[0]['creationStatus']='Failed'
+          if 'all service instances now deleted' in log_content:
+            json_decoded[0]['deleteStatus']='Pass'
         content += json_decoded
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
     json.dump(content, f, indent=4)
