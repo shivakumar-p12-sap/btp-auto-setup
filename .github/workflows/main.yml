@@ -11,7 +11,7 @@ jobs:
   integration-test:
     runs-on: ubuntu-latest
     container:
-      image: shivakumarp12/btp-setup-automator:latest
+      image: engsrvval.common.repositories.cloud.sap/btp-setup-automator:latest
       options: --user root
 
     # variables used only by the job integration-test, move to global, if cleanup or log job need them too
