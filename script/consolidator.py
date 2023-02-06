@@ -57,7 +57,7 @@ for filename in json_files:
     with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
         json_decoded = json.load(f)
         logfile = filename.replace(".json", ".log" )
-        json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/'+logfile
+        json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
         source_logfile="/home/user/logs/k8s/report/"+logfile
         with open(source_logfile, 'r') as file:
           log_content = file.read()
