@@ -84,8 +84,8 @@ jobs:
           rm /home/user/logs/k8s/report/apitestresult.json
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
           python3 ${USE_CASES}/script/consolidator.py
-          cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
-          cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
+          cp /home/user/logs/k8s/report/* /home/user/crossconsumption-report/logs/ 
+          cp /home/user/btpsatest/logs/index.html /home/user/crossconsumption-report/docs/ 
           cd btpsatest
           git config --global user.name "E2EVal-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
