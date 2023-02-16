@@ -43,22 +43,7 @@ jobs:
       - name: Check connection
         shell: bash
         run: |
-          kubectl get ns        
-
-      - name: 'Test CICD service and API'
-        working-directory: /home/user
-        shell: bash
-        run: |
-          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-cicd-service-default-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
-          set +e
-          python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
-          -usecasefile kymausecase.json \
-          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          cp /home/user/log/script.log /home/user/logs/k8s/report/cicd-service-default.log
-          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/cicd-service-default.json 
+          kubectl get ns         
           
       - name: 'Test Alert notification service and API'
         working-directory: /home/user
@@ -115,6 +100,21 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           cp /home/user/log/script.log /home/user/logs/k8s/report/business-logging-default.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/business-logging-default.json                
+
+      # - name: 'Test CICD service and API'
+      #   working-directory: /home/user
+      #   shell: bash
+      #   run: |
+      #     kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+      #     cat "${USE_CASES}/use_cases/SERVICE-kyma-cicd-service-default-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+      #     set +e
+      #     python3 btpsa \
+      #     -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+      #     -usecasefile kymausecase.json \
+      #     -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+      #     -k8snamespace ${{ env.K8S_NAMESPACE }} 
+      #     cp /home/user/log/script.log /home/user/logs/k8s/report/cicd-service-default.log
+      #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/cicd-service-default.json
 
       - name: 'Test Connected products service and API'
         working-directory: /home/user
@@ -185,6 +185,20 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           cp /home/user/log/script.log /home/user/logs/k8s/report/generic-line-item-matching-standard.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/generic-line-item-matching-standard.json
+
+      - name: 'Test HTML5 Apps repo service and API'
+        working-directory: /home/user
+        shell: bash
+        run: |
+          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+          cat "${USE_CASES}/use_cases/SERVICE-kyma-html5-apps-repo-app-host-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+          python3 btpsa \
+          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+          -usecasefile kymausecase.json \
+          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          -k8snamespace ${{ env.K8S_NAMESPACE }} 
+          cp /home/user/log/script.log /home/user/logs/k8s/report/html5-apps-repo-app-host.log
+          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/html5-apps-repo-app-host.json          
         
       # - name: 'Test identity service and API'
       #   working-directory: /home/user
