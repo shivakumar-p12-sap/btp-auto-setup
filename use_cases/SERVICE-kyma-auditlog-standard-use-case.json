@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "auditlog",
+      "plan": "standard",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "auditlog-standard"
+      ],
+      "api_resource_uri": {
+        "testapi": "/",
+        "apiBaseUrlPathKey": "data.url",
+        "oauthurlPathkey": "",
+        "clientId_basicUN_PathKey": "data.user",
+        "clientSecret_basicPW_PathKey": "data.password",
+        "authMethod": "basic",
+        "APITest": "yes",
+        "serviceID": "SERVICE-136"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

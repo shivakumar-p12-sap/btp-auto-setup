@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "message-queuing",
+      "plan": "standard",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "parameters": {
+        "sourceIPs": "0.0.0.0/0"
+      },
+      "createServiceKeys": [
+        "message-queuing-standard"
+      ],
+      "api_resource_uri": {
+        "testapi": "/v1/management/queues",
+        "apiBaseUrlPathKey": "data.management.url",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-319"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "spatialservices",
+      "plan": "lite",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "spatialservices-lite"
+      ],
+      "api_resource_uri": {
+        "testapi": "/geocoding/v1/health",
+        "apiBaseUrlPathKey": "data.uri",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-328"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

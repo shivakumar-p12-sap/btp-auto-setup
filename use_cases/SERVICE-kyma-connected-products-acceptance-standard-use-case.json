@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "connected-products-acceptance",
+      "plan": "standard",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "connected-products-acceptance-standard"
+      ],
+      "api_resource_uri": {
+        "testapi": "/sap/newton/tenant-manager/api/features/evaluate?flag=connected-products",
+        "apiBaseUrlPathKey": "data.endpoints.api",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-662"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

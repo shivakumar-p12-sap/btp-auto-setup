@@ -1,10 +1,10 @@
 {
    "category": "ENVIRONMENT",
    "name": "kymaruntime",
-   "plan": "azure",
+   "plan": "free",
    "amount": 1,
    "parameters": {
-     "name": "btp-auto-setup",
-     "region": "eastus"
+     "name": "kymacrossconsumption-e530d087",
+     "region": "eu-central-1"
    }
 }

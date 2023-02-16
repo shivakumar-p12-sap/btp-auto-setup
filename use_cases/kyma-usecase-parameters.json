@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-parameters.json",
   "loginmethod": "envVariables",
-  "region": "us20",
+  "region": "eu10-canary",
   "rundefaulttests": false,
   "myusergroups": [
     {
@@ -11,9 +11,9 @@
       ]
     }
   ],
-  "btpcliapihostregion":"eu10",
-  "globalaccount": "93951304-9109-44bc-ac3f-53c3ac8b309b",
-  "subaccountname": "EasyFranchiseKymaOp2Cw43Akanksha",
-  "subaccountid": "72a8e34e-b4eb-42e6-8463-ec103b4e5f71",
+  "btpcliapihostregion":"sap",
+  "globalaccount": "2a979d83-c576-4ff8-a281-8bb45bc5480d",
+  "subaccountname": "kymacrossconsumption-e530d087",
+  "subaccountid": "0355f316-e60b-49ea-8922-709a6dd1d4e1",
   "pruneserviceinstances": true
 }

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "cicd-service",
+      "plan": "default",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "cicd-service-default"
+      ],
+      "api_resource_uri": {
+        "testapi": "/",
+        "apiBaseUrlPathKey": "data.url",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-492"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

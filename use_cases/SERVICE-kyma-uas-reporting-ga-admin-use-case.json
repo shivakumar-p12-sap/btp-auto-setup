@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "uas",
+      "plan": "reporting-ga-admin",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "uas-reporting-ga-admin"
+      ],
+      "api_resource_uri": {
+        "testapi": "/reports/v1/cloudCreditsDetails?viewPhases=CURRENT",
+        "apiBaseUrlPathKey": "data.target_url",
+        "oauthurlPathkey": "data.url",
+        "clientId_basicUN_PathKey": "data.clientid",
+        "clientSecret_basicPW_PathKey": "data.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-444"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

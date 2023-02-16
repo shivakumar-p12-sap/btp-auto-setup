@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "ui5-flexibility-personalization",
+      "plan": "personalization",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "ui5-flexibility-personalization-personalization"
+      ],
+      "api_resource_uri": {
+        "testapi": "/sap/bc/lrep/actions/getcsrftoken",
+        "apiBaseUrlPathKey": "data.endpoints.personalization",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-204"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

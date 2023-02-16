@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "business-logging",
+      "plan": "default",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "parameters": {
+        "xs-security": {
+          "xsappname": "workflow-app"
+        },
+        "objects": [
+          {
+            "objectName": "com.sap.sd.sales",
+            "objectText": "Sales",
+            "subObjectDetails": [
+              {
+                "subObjectName": "shipment",
+                "subObjectText": "Logs for shipping of order items",
+                "logExpiryInDays": 30
+              },
+              {
+                "subObjectName": "invoicing",
+                "subObjectText": "Logs associated with invoicing of order",
+                "logExpiryInDays": 60
+              }
+            ]
+          }
+        ]
+      },
+      "createServiceKeys": [
+        "business-logging-default"
+      ],
+      "api_resource_uri": {
+        "testapi": "/odata/v2/com.sap.bs.businesslogging.DisplayMessage",
+        "apiBaseUrlPathKey": "data.readUrl",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-263"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

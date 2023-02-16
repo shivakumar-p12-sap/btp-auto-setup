@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "generic-line-item-matching",
+      "plan": "standard",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "generic-line-item-matching-standard"
+      ],
+      "api_resource_uri": {
+        "testapi": "/api/v1/tenants",
+        "apiBaseUrlPathKey": "data.url",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-692"
+      }
+    }
+  ],
+  "enableAPITest": true
+}
