@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import fnmatch
 import requests
+import sys
 
 import datetime as dt
 dt_India = dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
@@ -14,7 +15,7 @@ def check_git_issue(serviceid: str) -> str:
     url = f"https://github.tools.sap/api/v3/search/issues?q=repo:kyma/service-consumption/issues?is%3Aissue+is%3Aopen+%22https%3A%2F%2Fjtrack.wdf.sap.corp%2Fbrowse%2F{serviceid}%22+in%3Asummary"
 
     headers = {
-        'Authorization': 'Bearer '+os.environ['GIT_TOOL_TOKEN'],
+        'Authorization': 'Bearer '+sys.argv[1],
         'Cookie': 'logged_in=no'
     }
 
