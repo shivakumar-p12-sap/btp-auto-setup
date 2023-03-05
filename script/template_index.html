@@ -41,6 +41,7 @@
     <th>Create Status</th>
     <th>API Test Status</th>
     <th>Delete Status</th>
+    <th>Git Issue</th>
     <th>Log</th>
   </tr>
   {% for name in names %}
@@ -54,6 +55,7 @@
     <td>{{name.creationStatus}}</td>
     <td>{{name.status}}</td>
     <td>{{name.deleteStatus}}</td>
+    <td><a href="{{name.githubissue}}" target="_blank">Issue</a></td>
     <td><a href="{{name.loglink}}" target="_blank">Log</a></td>
   </tr>
   {% endfor %}
