@@ -3,11 +3,27 @@ import os
 import json
 from pathlib import Path
 import fnmatch
+import requests
 
 import datetime as dt
 dt_India = dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
 Indian_time = dt_India.strftime('%d-%b-%y %H:%M:%S')
 
+def check_git_issue(serviceid: str) -> str:
+
+    url = f"https://github.tools.sap/api/v3/search/issues?q=repo:kyma/service-consumption/issues?is%3Aissue+is%3Aopen+%22https%3A%2F%2Fjtrack.wdf.sap.corp%2Fbrowse%2F{serviceid}%22+in%3Asummary"
+
+    headers = {
+        'Authorization': 'Bearer '+os.environ['GIT_TOOL_TOKEN'],
+        'Cookie': 'logged_in=no'
+    }
+
+    response = requests.request("GET", url, headers=headers)
+    data=response.json()
+    if data['total_count'] == 0:
+        return 'none'
+    else:
+        return data['items'][0]['html_url']
 
 def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserName=None, externalConfigPassword=None, externalConfigToken=None):
     data = None
@@ -82,7 +98,7 @@ templateEnv = jinja2.Environment(loader=templateLoader)
 template = templateEnv.get_template(templateBasename)
 with open(filename, 'w') as fh:
     fh.write(template.render(
-        h1="Cross Consumption Test Results",
+        h1="Cross Consumption Kyma Test Results",
         h4=Indian_time,
         names=resultInfo
     ))
