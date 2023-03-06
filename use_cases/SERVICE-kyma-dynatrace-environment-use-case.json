@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "dynatrace",
+      "plan": "environment",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "dynatrace-environment"
+      ],
+      "parameters": {
+        "environment_name": "BROKERKYMAE2ECC",
+        "permission_assignments": [
+          {
+            "name": "test11",
+            "roles": [
+              "admin",
+              "log_analytics"
+            ]
+          },
+          {
+            "name": "test22",
+            "roles": [
+              "user",
+              "log_analytics"
+            ]
+          },
+          {
+            "name": "test33",
+            "roles": [
+              "view_sensitive",
+              "configure_sensitive"
+            ]
+          }
+        ],
+        "quotas": {
+          "dem_units": {
+            "annual_limit": 0,
+            "monthly_limit": 0
+          },
+          "host_units": {
+            "limit": -1
+          },
+          "synthetic_monitors": {
+            "annual_limit": 0,
+            "monthly_limit": 0
+          },
+          "user_sessions": {
+            "annual_limit": 0,
+            "monthly_limit": 0
+          }
+        },
+        "service_parameters": {
+          "skiperrors": "true"
+        }
+      },
+      "api_resource_uri": {
+        "APITest": "no",
+        "authMethod": "oauth",
+        "serviceID": "SERVICE-331"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

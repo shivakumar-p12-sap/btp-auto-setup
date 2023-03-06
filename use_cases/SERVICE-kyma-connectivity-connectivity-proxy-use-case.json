@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "connectivity",
+      "plan": "connectivity_proxy",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "connectivity-connectivity-proxy"
+      ],
+      "api_resource_uri": {
+        "testapi": "/api/v1/CAs",
+        "apiBaseUrlPathKey": "data.connectivity_service.url",
+        "oauthurlPathkey": "data.token_service_url",
+        "clientId_basicUN_PathKey": "data.clientid",
+        "clientSecret_basicPW_PathKey": "data.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-169"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

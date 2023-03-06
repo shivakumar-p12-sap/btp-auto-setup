@@ -1,0 +1,239 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "data-privacy-integration-service",
+      "plan": "standard",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "data-privacy-integration-service-standard"
+      ],
+      "parameters": {
+        "applicationHost": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com",
+        "applicationName": "dpp-h2r-reference-app-kymatest",
+        "dppConfig": {
+          "applicationHost": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com",
+          "applicationName": "dpp-h2r-reference-app-kymatest",
+          "businesscontext": {
+            "applications": [
+              {
+                "applicationBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com",
+                "applicationDescription": "Hire2Retire Reference CF Tutorials App",
+                "applicationGroups": [
+                  {
+                    "applicationGroupDescription": "H2R Reference App Group",
+                    "applicationGroupName": "dpp-h2r-reference-app-kyma-group",
+                    "applicationGroupTitle": "H2R Reference App Group",
+                    "members": [
+                      {
+                        "applicationName": "dpp-h2r-reference-app-kymatest",
+                        "applicationRole": "TransactionMaster",
+                        "primary": true
+                      }
+                    ]
+                  }
+                ],
+                "applicationTitle": "Hire2Retire Reference CF Tutorials App",
+                "applicationType": "TransactionMaster",
+                "businessObjects": [
+                  {
+                    "businessObjectBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com/dpp/information/employee",
+                    "businessObjectDescription": "Workforce Person",
+                    "businessObjectName": "Employee",
+                    "businessObjectTitle": "Workforce Person",
+                    "businessObjectType": "DataSubject",
+                    "dataCategories": [
+                      {
+                        "dataCategoryName": "basic-information",
+                        "sourceApplicationName": "dpp-h2r-reference-app-kymatest",
+                        "sourceBusinessObject": "Employee"
+                      },
+                      {
+                        "dataCategoryName": "bank-information",
+                        "sourceApplicationName": "dpp-h2r-reference-app-kymatest",
+                        "sourceBusinessObject": "Employee"
+                      }
+                    ],
+                    "referenceDates": [
+                      {
+                        "referenceDateDescription": "Employee Termination/Retirement Date",
+                        "referenceDateName": "employeeTerminationDate",
+                        "referenceDateTitle": "Employee Termination/Retirement Date"
+                      }
+                    ]
+                  },
+                  {
+                    "businessObjectBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com/dpp/information/payslip",
+                    "businessObjectDescription": "Payment Statements",
+                    "businessObjectName": "PaySlip",
+                    "businessObjectTitle": "Payment Statements",
+                    "businessObjectType": "Transaction",
+                    "dataCategories": [
+                      {
+                        "dataCategoryName": "basic-information",
+                        "sourceApplicationName": "dpp-h2r-reference-app-kymatest",
+                        "sourceBusinessObject": "Employee"
+                      },
+                      {
+                        "dataCategoryName": "bank-information",
+                        "sourceApplicationName": "dpp-h2r-reference-app-kymatest",
+                        "sourceBusinessObject": "Employee"
+                      }
+                    ],
+                    "referenceDates": [
+                      {
+                        "referenceDateDescription": "Salary payment date",
+                        "referenceDateName": "PaymentDate",
+                        "referenceDateTitle": "Salary payment date"
+                      }
+                    ]
+                  },
+                  {
+                    "businessObjectBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com/dpp/information/leaverequest",
+                    "businessObjectDescription": "Leave Requests",
+                    "businessObjectName": "LeaveRequests",
+                    "businessObjectTitle": "Leave Requests",
+                    "businessObjectType": "Transaction",
+                    "dataCategories": [
+                      {
+                        "dataCategoryName": "basic-information",
+                        "sourceApplicationName": "dpp-h2r-reference-app-kymatest",
+                        "sourceBusinessObject": "Employee"
+                      }
+                    ],
+                    "referenceDates": [
+                      {
+                        "referenceDateDescription": "Leave action date",
+                        "referenceDateName": "leaveactiondate",
+                        "referenceDateTitle": "Leave action date"
+                      }
+                    ]
+                  }
+                ],
+                "dataSubjectRoles": [
+                  {
+                    "dataSubjectRoleDescription": "H2R Reference App Employee",
+                    "dataSubjectRoleName": "employee",
+                    "dataSubjectRoleTitle": "Employee",
+                    "sourceApplicationName": "dpp-h2r-reference-app-kymatest",
+                    "sourceBusinessObject": "Employee"
+                  }
+                ],
+                "legalEntities": [
+                  {
+                    "legalEntityDescription": "Country Code",
+                    "legalEntityName": "CountryCode",
+                    "legalEntityTitle": "Country Code",
+                    "legalEntityValueHelp": "/legalentity/countrycode"
+                  }
+                ],
+                "legalGrounds": [
+                  {
+                    "legalGroundName": "employment-contract",
+                    "legalGroundType": "Contract",
+                    "sourceApplicationName": "dpp-h2r-reference-app-kymatest"
+                  },
+                  {
+                    "legalGroundName": "internship-contract",
+                    "legalGroundType": "Contract",
+                    "sourceApplicationName": "dpp-h2r-reference-app-kymatest"
+                  }
+                ]
+              }
+            ]
+          },
+          "deletion": {
+            "applicationGroupBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com/dpp/retention",
+            "applicationGroupDescription": "Hire2Retire Reference CF Tutorials App",
+            "dataSubjects": [
+              {
+                "dataSubjectBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com/dpp/retention/employee",
+                "dataSubjectDeletionEndPoint": "/dataSubjectDeletion",
+                "dataSubjectDescription": "Employee Role",
+                "dataSubjectRole": "Employee",
+                "legalEntity": {
+                  "legalEntity": "CountryCode",
+                  "legalEntityDescription": "Country Code",
+                  "legalEntityValueHelpEndPoint": "/legalEntities"
+                },
+                "legalGrounds": [
+                  {
+                    "dataSubjectEndofBusinessEndPoint": "/dataSubjectEndOfBusiness",
+                    "dataSubjectLastRetentionStartDatesEndPoint": "/dataSubjectLastRetentionStartDates",
+                    "dataSubjectLegalEntitiesEndPoint": "/dataSubjectLegalEntities",
+                    "dataSubjectLegalGroundDeletionEndPoint": "/dataSubjectLegalGroundDeletion",
+                    "dataSubjectsEndofResidenceConfirmationEndPoint": "/dataSubjectsEndofResidenceConfirmation",
+                    "dataSubjectsEndofResidenceEndPoint": "/dataSubjectsEndofResidence",
+                    "legalGround": "PaySlip",
+                    "legalGroundBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com/dpp/retention/employee/payslip",
+                    "legalGroundDescription": "Payment Statements",
+                    "startTimes": [
+                      {
+                        "startTime": "paymentdate",
+                        "startTimeDescription": "Salary payment date"
+                      }
+                    ]
+                  },
+                  {
+                    "dataSubjectEndofBusinessEndPoint": "/dataSubjectEndOfBusiness",
+                    "dataSubjectLastRetentionStartDatesEndPoint": "/dataSubjectLastRetentionStartDates",
+                    "dataSubjectLegalEntitiesEndPoint": "/dataSubjectLegalEntities",
+                    "dataSubjectLegalGroundDeletionEndPoint": "/dataSubjectLegalGroundDeletion",
+                    "dataSubjectsEndofResidenceConfirmationEndPoint": "/dataSubjectsEndofResidenceConfirmation",
+                    "dataSubjectsEndofResidenceEndPoint": "/dataSubjectsEndofResidence",
+                    "legalGround": "LeaveRequest",
+                    "legalGroundBaseURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com/dpp/retention/employee/leaverequest",
+                    "legalGroundDescription": "Leave Requests",
+                    "startTimes": [
+                      {
+                        "startTime": "leaveactiondate",
+                        "startTimeDescription": "Leave action date"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "information": {
+            "applicationTitle": "Hire2Retire Reference Testing",
+            "modules": [
+              {
+                "applicationURL": "https://dpp-h2r-reference-app-kyma-sandbox.cfapps.sap.hana.ondemand.com",
+                "endPoints": [
+                  {
+                    "annotationProviderRestEndPoint": "/dpp/information/annotation",
+                    "hasGdprAnnotations": false,
+                    "serviceName": "service",
+                    "serviceTitle": "Service",
+                    "serviceURI": "/dpp/information",
+                    "type": "rest"
+                  }
+                ],
+                "fullyQualifiedModuleName": "h2r-app"
+              }
+            ]
+          }
+        },
+        "xs-security": {
+          "authorities": [
+            "$ACCEPT_GRANTED_AUTHORITIES"
+          ],
+          "xsappname": "dpp-h2r-reference-app-kymatest"
+        }
+      },
+      "api_resource_uri": {
+        "testapi": "/dpi/v1/ext/il/v1/information/apps",
+        "apiBaseUrlPathKey": "data.url",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-462"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "retention-manager",
+      "plan": "free",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "parameters": {
+        "xs-security": {
+          "xsappname": "order-to-cash-e2ecckyma",
+          "authorities": [
+            "$ACCEPT_GRANTED_AUTHORITIES"
+          ]
+        },
+        "retention-configs": {
+          "applicationGroupName": "Order2Cashe2ecckyma",
+          "applicationGroupDescription": "Customer Order to Cash",
+          "applicationGroupDescriptionKey": "Order2Cash",
+          "applicationGroupBaseURL": "https://order2cash-service.cf.apps.hana.ondemand.com",
+          "textBundleEndPoint": "/dpp/texts/i18n.properties",
+          "supportedLanguages": [
+            "de",
+            "fr",
+            "ja",
+            "es",
+            "zh_CN"
+          ],
+          "authority": "order-to-cash!t1430.retention.manager",
+          "dataSubjects": [
+            {
+              "dataSubjectRole": "Customer",
+              "dataSubjectDescription": "Customer Data Subject Role",
+              "dataSubjectDescriptionKey": "Customer",
+              "dataSubjectBaseURL": "https://customer-service.cf.apps.hana.ondemand.com",
+              "dataSubjectInformationFilterEnabled": true,
+              "dataSubjectInformationEndPoint": "/dpp/dataSubjectInformation",
+              "dataSubjectDeletionEndPoint": "/dpp/deleteDataSubject",
+              "dataSubjectsDestroyingEndPoint": "/dpp/destroyDataSubjects",
+              "legalEntity": {
+                "legalEntity": "CompanyCode",
+                "legalEntityDescription": "Company Code",
+                "legalEntityDescriptionKey": "CompanyCode",
+                "legalEntityValueHelpEndPoint": "/dpp/companyCode"
+              },
+              "legalGrounds": [
+                {
+                  "legalGround": "SalesOrder",
+                  "legalGroundDescription": "Sales Order Document",
+                  "legalGroundDescriptionKey": "SalesOrder",
+                  "legalGroundBaseURL": "https://order-service.cf.apps.hana.ondemand.com",
+                  "dataSubjectEndofBusinessEndPoint": "/dpp/dataSubjectEndOfBusiness",
+                  "dataSubjectLegalEntitiesEndPoint": "/dpp/dataSubjectLegalEntities",
+                  "dataSubjectLastRetentionStartDatesEndPoint": "/dpp/dataSubjectRetentionStartDate",
+                  "dataSubjectsEndofResidenceEndPoint": "/dpp/endofResidenceDataSubject",
+                  "dataSubjectsEndofResidenceConfirmationEndPoint": "/dpp/endofResidenceDSConfirmation",
+                  "dataSubjectLegalGroundDeletionEndPoint": "/dpp/deleteDSLegalGroundInstances",
+                  "dataSubjectsLegalGroundDestroyingEndPoint": "/dpp/destroyLegalGroundInstances",
+                  "startTimes": [
+                    {
+                      "startTime": "CompletionDate",
+                      "startTimeDescription": "Document Completion Date",
+                      "startTimeDescriptionKey": "CompletionDate"
+                    }
+                  ],
+                  "conditions": [
+                    {
+                      "conditionFieldName": "OrderType",
+                      "conditionFieldType": "String",
+                      "conditionFieldDescription": "Sales Document Order Type",
+                      "conditionFieldDescriptionKey": "OrderType",
+                      "conditionFieldValueHelpEndPoint": "/dpp/orderTypes"
+                    }
+                  ]
+                },
+                {
+                  "legalGround": "Payment",
+                  "legalGroundDescription": "Payment Document",
+                  "legalGroundDescriptionKey": "Payment",
+                  "legalGroundBaseURL": "https://payment-service.cf.apps.hana.ondemand.com",
+                  "dataSubjectEndofBusinessEndPoint": "/dpp/dataSubjectEndOfBusiness",
+                  "dataSubjectLegalEntitiesEndPoint": "/dpp/dataSubjectLegalEntities",
+                  "dataSubjectLastRetentionStartDatesEndPoint": "/dpp/dataSubjectRetentionStartDate",
+                  "dataSubjectsEndofResidenceEndPoint": "/dpp/endofResidenceDataSubject",
+                  "dataSubjectsEndofResidenceConfirmationEndPoint": "/dpp/endofResidenceDSConfirmation",
+                  "dataSubjectLegalGroundDeletionEndPoint": "/dpp/deleteDSLegalGroundInstances",
+                  "dataSubjectsLegalGroundDestroyingEndPoint": "/dpp/destroyLegalGroundInstances",
+                  "startTimes": [
+                    {
+                      "startTime": "DocumentDate",
+                      "startTimeDescription": "Document Issue Date",
+                      "startTimeDescriptionKey": "DocumentDate"
+                    },
+                    {
+                      "startTime": "PostingDate",
+                      "startTimeDescription": "Posting Date",
+                      "startTimeDescriptionKey": "PostingDate"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "createServiceKeys": [
+        "retention-manager-free"
+      ],
+      "api_resource_uri": {
+        "APITest": "no",
+        "authMethod": "oauth",
+        "serviceID": "SERVICE-261"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

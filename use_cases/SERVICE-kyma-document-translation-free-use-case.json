@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "document-translation",
+      "plan": "free",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "document-translation-free"
+      ],
+      "api_resource_uri": {
+        "testapi": "/api/v1/languages",
+        "apiBaseUrlPathKey": "data.documenttranslation.url",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "APITest": "yes",
+        "authMethod": "oauth",
+        "serviceID": "SERVICE-67"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

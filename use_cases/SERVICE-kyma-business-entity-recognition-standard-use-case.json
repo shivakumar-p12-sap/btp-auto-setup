@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "business-entity-recognition",
+      "plan": "standard",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "business-entity-recognition-standard"
+      ],
+      "api_resource_uri": {
+        "testapi": "/api/v1/models",
+        "apiBaseUrlPathKey": "data.url",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "APITest": "yes",
+        "authMethod": "oauth",
+        "serviceID": "SERVICE-467"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

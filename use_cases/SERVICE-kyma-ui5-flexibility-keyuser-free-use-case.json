@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "ui5-flexibility-keyuser",
+      "plan": "free",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "ui5-flexibility-keyuser-free"
+      ],
+      "api_resource_uri": {
+        "APITest": "no",
+        "authMethod": "oauth",
+        "serviceID": "SERVICE-405"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

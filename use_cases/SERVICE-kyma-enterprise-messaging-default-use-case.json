@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "enterprise-messaging",
+      "plan": "default",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "enterprise-messaging-default"
+      ],
+      "parameters": {
+        "emname": "cctestkyma",
+        "namespace": "cckyma/cctestkyma/123",
+        "version": "1.1.0",
+        "options": {
+          "management": true,
+          "messagingrest": true,
+          "messaging": true
+        },
+        "rules": {
+          "queueRules": {
+            "publishFilter": [
+              "${namespace}/*"
+            ],
+            "subscribeFilter": [
+              "${namespace}/*"
+            ]
+          },
+          "topicRules": {
+            "publishFilter": [
+              "${namespace}/*"
+            ],
+            "subscribeFilter": [
+              "${namespace}/*"
+            ]
+          }
+        }
+      },
+      "api_resource_uri": {
+        "testapi": "/messagingrest/v1/subscriptions",
+        "apiBaseUrlPathKey": "data.messaging.2.uri",
+        "oauthurlPathkey": "data.uaa.url",
+        "clientId_basicUN_PathKey": "data.uaa.clientid",
+        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-799"
+      }
+    }
+  ],
+  "enableAPITest": true
+}

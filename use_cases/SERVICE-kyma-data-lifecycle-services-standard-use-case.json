@@ -1,0 +1,327 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "data-lifecycle-services",
+      "plan": "standard",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "parameters": {
+        "xs-security": {
+          "xsappname": "scenario-test-clone-e2ekyma",
+          "authorities": [
+            "$ACCEPT_GRANTED_AUTHORITIES"
+          ],
+          "oauth2-configuration": {
+            "credential-types": [
+              "binding-secret",
+              "x509"
+            ]
+          }
+        },
+        "ApplicationName": "ScenarioTeste2ekyma",
+        "ApplicationTitle": "Scenario Test",
+        "ApplicationDescription": "Scenario test of Stock Monitoring Application",
+        "Configuration": {
+          "Entities": [
+            {
+              "Name": "PurchasingDocumentHeader",
+              "Type": "business-object",
+              "Keys": [
+                "DocumentNumber"
+              ],
+              "SearchParameters": {
+                "Index1": "DocumentCategory",
+                "Index2": "Status",
+                "Index3": "CompletionDate"
+              },
+              "Properties": [
+                {
+                  "Name": "DocumentNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "DocumentCategory",
+                  "Type": "String"
+                },
+                {
+                  "Name": "Status",
+                  "Type": "String"
+                },
+                {
+                  "Name": "VendorAccountNumber",
+                  "Type": "Integer"
+                },
+                {
+                  "Name": "PurchasingOrg",
+                  "Type": "String"
+                },
+                {
+                  "Name": "CurrencyKey",
+                  "Type": "String"
+                },
+                {
+                  "Name": "ExchangeRate",
+                  "Type": "Decimal"
+                },
+                {
+                  "Name": "WarrantyDate",
+                  "Type": "Timestamp"
+                },
+                {
+                  "Name": "UserId",
+                  "Type": "String"
+                },
+                {
+                  "Name": "CreationDate",
+                  "Type": "Timestamp"
+                },
+                {
+                  "Name": "CompletionDate",
+                  "Type": "Timestamp",
+                  "RangeEnabled": true
+                }
+              ],
+              "ParentEntity": ""
+            },
+            {
+              "Name": "PurchasingDocumentItem",
+              "Keys": [
+                "DocumentNumber",
+                "ItemNumber"
+              ],
+              "Properties": [
+                {
+                  "Name": "DocumentNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "ItemNumber",
+                  "Type": "Integer",
+                  "Nullable": false
+                },
+                {
+                  "Name": "MaterialNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "Plant",
+                  "Type": "String"
+                },
+                {
+                  "Name": "OrderQuantity",
+                  "Type": "Integer",
+                  "Nullable": false
+                },
+                {
+                  "Name": "OrderUnit",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "OrderPrice",
+                  "Type": "Integer",
+                  "Nullable": false
+                },
+                {
+                  "Name": "GoodReceipt",
+                  "Type": "String"
+                },
+                {
+                  "Name": "CreationDate",
+                  "Type": "TimeStamp"
+                }
+              ],
+              "ParentEntity": {
+                "Name": "PurchasingDocumentHeader",
+                "KeyMapping": [
+                  {
+                    "SourceProperty": "DocumentNumber",
+                    "TargetProperty": "DocumentNumber"
+                  }
+                ]
+              }
+            },
+            {
+              "Name": "PurchaseRequistition",
+              "Keys": [
+                "RequisitionNumber",
+                "ItemNumber"
+              ],
+              "Properties": [
+                {
+                  "Name": "RequisitionNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "ItemNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "RequisitionDocumentType",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "MaterialNumber",
+                  "Type": "Integer",
+                  "Nullable": false
+                },
+                {
+                  "Name": "RequistionerName",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "RequisitionDate",
+                  "Type": "Timestamp"
+                },
+                {
+                  "Name": "RequistionQuantity",
+                  "Type": "Integer"
+                },
+                {
+                  "Name": "PurchasingOrg",
+                  "Type": "String"
+                }
+              ],
+              "ParentEntity": {
+                "Name": "PurchasingDocumentItem",
+                "KeyMapping": [
+                  {
+                    "SourceProperty": "ItemNumber",
+                    "TargetProperty": "ItemNumber"
+                  }
+                ]
+              }
+            },
+            {
+              "Name": "AccountingDocumentHeader",
+              "Type": "business-object",
+              "Keys": [
+                "AccountingDocumentNumber",
+                "FiscalYear"
+              ],
+              "SearchParameters": {
+                "Index1": "FiscalYear",
+                "Index2": "DocumentType"
+              },
+              "Properties": [
+                {
+                  "Name": "AccountingDocumentNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "FiscalYear",
+                  "Type": "Integer",
+                  "Nullable": false,
+                  "RangeEnabled": true
+                },
+                {
+                  "Name": "DocumentType",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "SelfIssuedDocument",
+                  "Type": "Boolean"
+                },
+                {
+                  "Name": "PostingDate",
+                  "Type": "Timestamp"
+                },
+                {
+                  "Name": "CreationDate",
+                  "Type": "Timestamp"
+                },
+                {
+                  "Name": "ReasonForReversal",
+                  "Type": "String"
+                }
+              ],
+              "ParentEntity": ""
+            },
+            {
+              "Name": "AccountingDocumentSegment",
+              "Keys": [
+                "AccountingDocumentNumber",
+                "FiscalYear",
+                "SegmentNumber"
+              ],
+              "Properties": [
+                {
+                  "Name": "AccountingDocumentNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "FiscalYear",
+                  "Type": "Integer",
+                  "Nullable": false
+                },
+                {
+                  "Name": "SegmentNumber",
+                  "Type": "String",
+                  "Nullable": false
+                },
+                {
+                  "Name": "NumberOfLineItems",
+                  "Type": "Integer",
+                  "Nullable": false
+                },
+                {
+                  "Name": "ClearingDate",
+                  "Type": "Timestamp",
+                  "Nullable": false
+                },
+                {
+                  "Name": "DebitOrCreditIndicator",
+                  "Type": "Boolean",
+                  "Nullable": false
+                },
+                {
+                  "Name": "TaxAmountInLocalCurrency",
+                  "Type": "Float",
+                  "Nullable": false
+                },
+                {
+                  "Name": "SalesDocument",
+                  "Type": "String",
+                  "Nullable": false
+                }
+              ],
+              "ParentEntity": {
+                "Name": "AccountingDocumentHeader",
+                "KeyMapping": [
+                  {
+                    "SourceProperty": "AccountingDocumentNumber",
+                    "TargetProperty": "AccountingDocumentNumber"
+                  },
+                  {
+                    "SourceProperty": "FiscalYear",
+                    "TargetProperty": "FiscalYear"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "createServiceKeys": [
+        "data-lifecycle-services-standard"
+      ],
+      "api_resource_uri": {
+        "APITest": "no",
+        "authMethod": "oauth",
+        "serviceID": "SERVICE-482"
+      }
+    }
+  ],
+  "enableAPITest": true
+}
