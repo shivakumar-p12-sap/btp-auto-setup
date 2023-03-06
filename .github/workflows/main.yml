@@ -350,7 +350,7 @@ jobs:
           rm /home/user/logs/k8s/report/index.html
           rm /home/user/logs/k8s/report/apitestresult.json
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
-          python3 ${USE_CASES}/script/consolidator.py
+          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN}
           cp /home/user/logs/k8s/report/* /home/user/crossconsumption-report/logs/ 
           cp /home/user/crossconsumption-report/logs/index.html /home/user/crossconsumption-report/docs/ 
           cd crossconsumption-report
