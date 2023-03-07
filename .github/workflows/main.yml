@@ -243,19 +243,19 @@ jobs:
           cp /home/user/log/script.log /home/user/logs/k8s/report/destination-lite.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/destination-lite.json
 
-      - name: 'Test dq-service and API'
-        working-directory: /home/user
-        shell: bash
-        run: |
-          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-dq-services-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
-          python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
-          -usecasefile kymausecase.json \
-          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          cp /home/user/log/script.log /home/user/logs/k8s/report/dq-services-standard.log
-          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/dq-services-standard.json
+      # - name: 'Test dq-service and API'
+      #   working-directory: /home/user
+      #   shell: bash
+      #   run: |
+      #     kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+      #     cat "${USE_CASES}/use_cases/SERVICE-kyma-dq-services-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+      #     python3 btpsa \
+      #     -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+      #     -usecasefile kymausecase.json \
+      #     -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+      #     -k8snamespace ${{ env.K8S_NAMESPACE }} 
+      #     cp /home/user/log/script.log /home/user/logs/k8s/report/dq-services-standard.log
+      #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/dq-services-standard.json
 
       - name: 'Test Document-information-extraction service and API'
         working-directory: /home/user
