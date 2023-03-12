@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: shivakumarp12/btp-setup-automator:latest
-      credentials:
-        username: ${{ secrets.ARTIFACTORY_ID }}
-        password: ${{ secrets.ARTIFACTORY_KEY }}
       options: --user root
 
     # variables used only by the job integration-test, move to global, if cleanup or log job need them too
