@@ -55,6 +55,7 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           cp /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
+          cat /home/user/logs/k8s/report/apitestresult.json
     
       - name: 'Test Auditlog service with plan oauth2 and API'
         working-directory: /home/user
@@ -69,6 +70,7 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           cp /home/user/log/script.log /home/user/logs/k8s/report/auditlog-oauth2.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-oauth2.json
+          cat /home/user/logs/k8s/report/apitestresult.json
 
       - name: 'Test Auditlog service with plan standard and API'
         working-directory: /home/user
@@ -83,6 +85,7 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           cp /home/user/log/script.log /home/user/logs/k8s/report/auditlog-standard.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-standard.json
+          cat /home/user/logs/k8s/report/apitestresult.json
 
       # - name: 'Test Aderestapi service and API'
       #   working-directory: /home/user
@@ -111,6 +114,7 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           cp /home/user/log/script.log /home/user/logs/k8s/report/business-logging-default.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/business-logging-default.json 
+          cat /home/user/logs/k8s/report/apitestresult.json
 
       - name: 'Upload reports'
         working-directory: /home/user

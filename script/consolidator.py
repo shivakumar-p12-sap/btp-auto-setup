@@ -78,6 +78,7 @@ for filename in json_files:
     with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
         json_decoded = json.load(f)
         print('\n'.join(map(str, json_decoded)))
+        print(json.dumps(json_decoded))
         logfile = filename.replace(".json", ".log" )
         print("CRETED log file name : "+logfile)
         json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
