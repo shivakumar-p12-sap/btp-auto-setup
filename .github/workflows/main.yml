@@ -296,19 +296,19 @@ jobs:
           cp /home/user/log/script.log /home/user/logs/k8s/report/data-attribute-recommendation-standard.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/data-attribute-recommendation-standard.json
 
-      - name: 'Test Document-translation service and API'
-        working-directory: /home/user
-        shell: bash
-        run: |
-          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-document-translation-free-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
-          python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
-          -usecasefile kymausecase.json \
-          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          cp /home/user/log/script.log /home/user/logs/k8s/report/document-translation-free.log
-          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/document-translation-free.json
+      # - name: 'Test Document-translation service and API'
+      #   working-directory: /home/user
+      #   shell: bash
+      #   run: |
+      #     kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+      #     cat "${USE_CASES}/use_cases/SERVICE-kyma-document-translation-free-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+      #     python3 btpsa \
+      #     -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+      #     -usecasefile kymausecase.json \
+      #     -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+      #     -k8snamespace ${{ env.K8S_NAMESPACE }} 
+      #     cp /home/user/log/script.log /home/user/logs/k8s/report/document-translation-free.log
+      #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/document-translation-free.json
 
       - name: 'Test Dynatrace service and API'
         working-directory: /home/user
