@@ -68,7 +68,10 @@ def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserN
 
 
 json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
-print("Json files list : "+json_files)
+print("Json files list : ")
+print('\n'.join(map(str, json_files)))
+
+
 content = []
 for filename in json_files:
     print("IN Loop : "+filename)
