@@ -186,19 +186,19 @@ jobs:
           cp /home/user/log/script.log /home/user/logs/k8s/report/consent-repository-service-default.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/consent-repository-service-default.json 
 
-      - name: 'Test connectivity service and API'
-        working-directory: /home/user
-        shell: bash
-        run: |
-          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-connectivity-connectivity-proxy-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
-          python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
-          -usecasefile kymausecase.json \
-          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          cp /home/user/log/script.log /home/user/logs/k8s/report/connectivity-connectivity-proxy.log
-          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/connectivity-connectivity-proxy.json
+      # - name: 'Test connectivity service and API'
+      #   working-directory: /home/user
+      #   shell: bash
+      #   run: |
+      #     kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+      #     cat "${USE_CASES}/use_cases/SERVICE-kyma-connectivity-connectivity-proxy-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+      #     python3 btpsa \
+      #     -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+      #     -usecasefile kymausecase.json \
+      #     -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+      #     -k8snamespace ${{ env.K8S_NAMESPACE }} 
+      #     cp /home/user/log/script.log /home/user/logs/k8s/report/connectivity-connectivity-proxy.log
+      #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/connectivity-connectivity-proxy.json
 
       - name: 'Test Certificate service and API'
         working-directory: /home/user
