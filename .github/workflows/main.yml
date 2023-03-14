@@ -693,6 +693,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/xsuaa-application.json          
           
       - name: 'Upload reports'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
