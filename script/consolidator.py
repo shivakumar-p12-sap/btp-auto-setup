@@ -77,23 +77,27 @@ for filename in json_files:
     print("IN Loop : "+filename)
     with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
         json_decoded = json.load(f)
-        print('\n'.join(map(str, json_decoded)))
-        print(json.dumps(json_decoded))
-        logfile = filename.replace(".json", ".log" )
-        print("CRETED log file name : "+logfile)
-        json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
-        json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
-        source_logfile="/home/user/logs/k8s/report/"+logfile
-        with open(source_logfile, 'r') as file:
-          log_content = file.read()
-          json_decoded[0]['deleteStatus']='Failed'
-          if 'is now available' in log_content:
-            json_decoded[0]['creationStatus']='Pass'
-          else:
-            json_decoded[0]['creationStatus']='Failed'
-          if 'all service instances now deleted' in log_content:
-            json_decoded[0]['deleteStatus']='Pass'
-        content += json_decoded
+        #print('\n'.join(map(str, json_decoded)))
+        #print(json.dumps(json_decoded))
+        print(len(json_decoded))
+        if len(json_decoded) > 0:
+          logfile = filename.replace(".json", ".log")
+          print("CRETED log file name : "+logfile)
+          json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
+          json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
+          source_logfile="/home/user/logs/k8s/report/"+logfile
+          with open(source_logfile, 'r') as file:
+            log_content = file.read()
+            json_decoded[0]['deleteStatus']='Failed'
+            if 'is now available' in log_content:
+              json_decoded[0]['creationStatus']='Pass'
+            else:
+              json_decoded[0]['creationStatus']='Failed'
+            if 'all service instances now deleted' in log_content:
+              json_decoded[0]['deleteStatus']='Pass'
+          content += json_decoded
+        else:
+            print("SKIP : "+filename)
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
     json.dump(content, f, indent=4)
 
