@@ -21,6 +21,7 @@ def check_git_issue(serviceid: str) -> str:
 
     response = requests.request("GET", url, headers=headers)
     data=response.json()
+    print(data)
     if data['total_count'] == 0:
         return 'none'
     else:
@@ -84,7 +85,10 @@ for filename in json_files:
           logfile = filename.replace(".json", ".log")
           print("CRETED log file name : "+logfile)
           json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
+          print("LogLINK : "+json_decoded[0]['loglink'])
+          print("SERVICE ID : "+json_decoded[0]['serviceid'])
           json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
+          print("githubissue : "+json_decoded[0]['githubissue'])
           source_logfile="/home/user/logs/k8s/report/"+logfile
           with open(source_logfile, 'r') as file:
             log_content = file.read()
