@@ -46,6 +46,7 @@ jobs:
           kubectl get ns         
           
       - name: 'Test Alert notification service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -60,6 +61,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
     
       - name: 'Test Auditlog service with plan oauth2 and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -74,6 +76,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-oauth2.json
 
       - name: 'Test Auditlog service with plan standard and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -88,6 +91,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-standard.json
 
       # - name: 'Test Aderestapi service and API'
+      #   if: success() || failure()
       #   working-directory: /home/user
       #   shell: bash
       #   run: |
@@ -102,6 +106,7 @@ jobs:
       #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/adsrestapi-standard.json          
 
       - name: 'Test Business logging service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -116,6 +121,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/business-logging-default.json 
 
       - name: 'Test Business-entity-recognition service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -130,6 +136,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/business-entity-recognition-standard.json                          
 
       # - name: 'Test CICD service and API'
+      #   if: success() || failure()
       #   working-directory: /home/user
       #   shell: bash
       #   run: |
@@ -145,6 +152,7 @@ jobs:
       #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/cicd-service-default.json
 
       - name: 'Test Credstore service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -159,6 +167,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/credstore-standard.json
 
       - name: 'Test Connected products service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -173,6 +182,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/connected-products-acceptance-standard.json 
 
       - name: 'Test Consent repository service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -187,6 +197,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/consent-repository-service-default.json 
 
       # - name: 'Test connectivity service and API'
+      #   if: success() || failure()
       #   working-directory: /home/user
       #   shell: bash
       #   run: |
@@ -201,6 +212,7 @@ jobs:
       #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/connectivity-connectivity-proxy.json
 
       - name: 'Test Certificate service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -216,6 +228,7 @@ jobs:
 
 
       - name: 'Test Data Custodian service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -230,6 +243,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/data-custodian-default.json                     
 
       - name: 'Test destination service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -244,6 +258,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/destination-lite.json
 
       #- name: 'Test dq-service and API'
+      #  if: success() || failure()
       #  working-directory: /home/user
       #  shell: bash
       #  run: |
@@ -258,6 +273,7 @@ jobs:
       #    cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/dq-services-standard.json
 
       - name: 'Test Document-information-extraction service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -272,6 +288,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/sap-document-information-extraction-default.json 
 
       - name: 'Test Document-classification service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -286,6 +303,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/document-classification-internal-production-default.json
 
       - name: 'Test Data-attribute-recommendation service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -300,6 +318,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/data-attribute-recommendation-standard.json
 
       #- name: 'Test Document-translation service and API'
+      #  if: success() || failure()
       #  working-directory: /home/user
       #  shell: bash
       #  run: |
@@ -314,6 +333,7 @@ jobs:
       #    cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/document-translation-free.json
 
       - name: 'Test Dynatrace service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -328,6 +348,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/dynatrace-environment.json  
 
       #- name: 'Test Data-privacy-integration service and API'
+      #  if: success() || failure()
       #  working-directory: /home/user
       #  shell: bash
       #  run: |
@@ -342,6 +363,7 @@ jobs:
       #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/data-privacy-integration-service-standard.json
 
       - name: 'Test Data-lifecycle service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -356,6 +378,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/data-lifecycle-services-standard.json                            
 
       - name: 'Test Enterprise-messaging service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -370,6 +393,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/enterprise-messaging-default.json                                                  
 
       #- name: 'Test Feature flags service and API'
+      #  if: success() || failure()
       #  working-directory: /home/user
       #  shell: bash
       #  run: |
@@ -384,6 +408,7 @@ jobs:
       #    cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/feature-flags-standard.json
 
       - name: 'Test Generic line item service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -398,6 +423,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/generic-line-item-matching-standard.json
 
       - name: 'Test HTML5 Apps repo service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -412,6 +438,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/html5-apps-repo-app-host.json          
         
       # - name: 'Test identity service and API'
+      #   if: success() || failure()
       #   working-directory: /home/user
       #   shell: bash
       #   run: |
@@ -426,6 +453,7 @@ jobs:
       #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/identity-application.json 
 
       - name: 'Test Malware scanner service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -440,6 +468,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/malware-scanner-clamav.json 
 
       - name: 'Test Message Queuing service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -454,6 +483,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/message-queuing-standard.json
 
       - name: 'Test Metering service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -468,6 +498,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/metering-service-development.json          
 
       # - name: 'Test One-MDS service and API'
+      #   if: success() || failure()
       #   working-directory: /home/user
       #   shell: bash
       #   run: |
@@ -482,6 +513,7 @@ jobs:
       #     cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/one-mds-default.json
 
       - name: 'Test Object store service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -496,6 +528,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/objectstore-standard.json      
 
       #- name: 'Test SAP Graph service and API'
+      #  if: success() || failure()
       #  working-directory: /home/user
       #  shell: bash
       #  run: |
@@ -510,6 +543,7 @@ jobs:
       #    cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/sap-graph-standard.json 
 
       - name: 'Test Retention-manager service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -524,6 +558,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/retention-manager-free.json
 
       - name: 'Test Service Manager service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -538,6 +573,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/service-manager-container.json
 
       - name: 'Test Spatialservices service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -552,6 +588,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/spatialservices-lite.json 
 
       - name: 'Test Slis service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -566,6 +603,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/slis-standard.json
 
       - name: 'Test SDM service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -580,6 +618,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/sdm-free.json          
 
       - name: 'Test transport service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -594,6 +633,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/transport-standard.json
 
       - name: 'Test uas reporting service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -608,6 +648,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/uas-reporting-ga-admin.json
 
       - name: 'Test UI5 Flexibility Personalization service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -622,6 +663,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/ui5-flexibility-personalization-personalization.json  
 
       - name: 'Test UI5 Flexibility keyuser service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
@@ -636,6 +678,7 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/ui5-flexibility-keyuser-free.json                                                                                     
           
       - name: 'Test xsuaa service and API'
+        if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
