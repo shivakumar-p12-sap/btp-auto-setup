@@ -94,6 +94,11 @@ for filename in json_files:
           print("SERVICE ID : "+json_decoded[0]['serviceid'])
           json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
           print("githubissue : "+json_decoded[0]['githubissue'])
+          if json_decoded[0]['githubissue'] == "none":
+            json_decoded[0]['issuenumber']="none"
+          else:
+            x = json_decoded[0]['githubissue'].split("/")
+            json_decoded[0]['issuenumber']=x[len(x)-1]          
           source_logfile="/home/user/logs/k8s/report/"+logfile
           with open(source_logfile, 'r') as file:
             log_content = file.read()
