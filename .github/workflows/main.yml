@@ -74,7 +74,7 @@ jobs:
 
       - name: 'Upload reports'
         env:
-          STEPS_CONTEXT: ${{toJson(steps)}}
+          STEPS_CONTEXT: ${{steps}}
         working-directory: /home/user
         shell: bash
         run: |
