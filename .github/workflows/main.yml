@@ -72,6 +72,29 @@ jobs:
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-oauth2.json
           cat /home/user/logs/k8s/report/apitestresult.json
 
+      - name: 'Upload reports'
+        env:
+          STEPS_CONTEXT: toJson(steps)
+        working-directory: /home/user
+        shell: bash
+        run: |
+          git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
+          ls -la
+          cp /home/user/log/*.log /home/user/logs/k8s/report/
+          rm /home/user/logs/k8s/report/index.html
+          rm /home/user/logs/k8s/report/apitestresult.json
+          cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
+          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} ${STEPS_CONTEXT}
+          cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
+          cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
+          cd btpsatest
+          git config --global user.name "E2EVal-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Log Commit $(TZ=IST-5:30 date +%F_%T) IST"
+          git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
+          git push            
+
       - name: 'Test Auditlog service with plan standard and API'
         working-directory: /home/user
         shell: bash
@@ -114,30 +137,7 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           cp /home/user/log/script.log /home/user/logs/k8s/report/business-logging-default.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/business-logging-default.json 
-          cat /home/user/logs/k8s/report/apitestresult.json
-
-      - name: 'Upload reports'
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        working-directory: /home/user
-        shell: bash
-        run: |
-          git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
-          ls -la
-          cp /home/user/log/*.log /home/user/logs/k8s/report/
-          rm /home/user/logs/k8s/report/index.html
-          rm /home/user/logs/k8s/report/apitestresult.json
-          cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
-          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} ${STEPS_CONTEXT}
-          cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
-          cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
-          cd btpsatest
-          git config --global user.name "E2EVal-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Log Commit $(TZ=IST-5:30 date +%F_%T) IST"
-          git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
-          git push           
+          cat /home/user/logs/k8s/report/apitestresult.json         
 
       - name: 'Test Business-entity-recognition service and API'
         working-directory: /home/user
