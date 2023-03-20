@@ -117,6 +117,8 @@ jobs:
           cat /home/user/logs/k8s/report/apitestresult.json
 
       - name: 'Upload reports'
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
         working-directory: /home/user
         shell: bash
         run: |
@@ -126,7 +128,7 @@ jobs:
           rm /home/user/logs/k8s/report/index.html
           rm /home/user/logs/k8s/report/apitestresult.json
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
-          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN}
+          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} ${STEPS_CONTEXT}
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
           cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
           cd btpsatest
