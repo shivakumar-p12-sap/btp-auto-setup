@@ -74,10 +74,11 @@ jobs:
 
       - name: 'Upload reports'
         env:
-          STEPS_CONTEXT: ${{jobs.integration-test.steps}}
+          STEPS_CONTEXT: ${{toJson(steps)}}
         working-directory: /home/user
         shell: bash
         run: |
+          echo "$STEPS_CONTEXT"
           git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
           ls -la
           cp /home/user/log/*.log /home/user/logs/k8s/report/
