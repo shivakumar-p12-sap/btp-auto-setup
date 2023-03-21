@@ -74,23 +74,27 @@ def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserN
 
 json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
 print("Json files list : ")
-print('\n'.join(map(str, json_files)))
-
+#print('\n'.join(map(str, json_files)))
 
 content = []
 for filename in json_files:
-    print("IN Loop : "+filename)
+#    print("IN Loop : "+filename)
     with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
         json_decoded = json.load(f)
-        print(len(json_decoded))
+#        print(len(json_decoded))
         if len(json_decoded) > 0:
           logfile = filename.replace(".json", ".log")
-          print("CRETED log file name : "+logfile)
+#          print("CRETED log file name : "+logfile)
           json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
-          print("LogLINK : "+json_decoded[0]['loglink'])
-          print("SERVICE ID : "+json_decoded[0]['serviceid'])
+#          print("LogLINK : "+json_decoded[0]['loglink'])
+#          print("SERVICE ID : "+json_decoded[0]['serviceid'])
           json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
-          print("githubissue : "+json_decoded[0]['githubissue'])
+#          print("githubissue : "+json_decoded[0]['githubissue'])
+          if json_decoded[0]['githubissue'] == "none":
+            json_decoded[0]['issuenumber']="none"
+          else:
+            x = json_decoded[0]['githubissue'].split("/")
+            json_decoded[0]['issuenumber']=x[len(x)-1]          
           source_logfile="/home/user/logs/k8s/report/"+logfile
           with open(source_logfile, 'r') as file:
             log_content = file.read()
@@ -103,7 +107,7 @@ for filename in json_files:
               json_decoded[0]['deleteStatus']='Pass'
           content += json_decoded
         else:
-            print("SKIP : "+filename)
+            print("SKIPPED : "+filename)
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
     json.dump(content, f, indent=4)
 
