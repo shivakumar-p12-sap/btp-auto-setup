@@ -56,6 +56,7 @@ jobs:
           cp /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
           cat /home/user/logs/k8s/report/apitestresult.json
+        run: echo ::set-output 
     
       - name: 'Test Auditlog service with plan oauth2 and API'
         working-directory: /home/user
@@ -71,10 +72,11 @@ jobs:
           cp /home/user/log/script.log /home/user/logs/k8s/report/auditlog-oauth2.log
           cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-oauth2.json
           cat /home/user/logs/k8s/report/apitestresult.json
+        run: echo ::set-output 
 
       - name: 'Upload reports'
         env:
-          STEPS_CONTEXT: ${{toJson(steps.*)}}
+          STEPS_CONTEXT: ${{toJson(steps)}}
         working-directory: /home/user
         shell: bash
         run: |
