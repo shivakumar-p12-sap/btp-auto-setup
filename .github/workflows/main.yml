@@ -11,10 +11,7 @@ jobs:
   integration-test:
     runs-on: ubuntu-latest
     container:
-      image: engsrvval.common.repositories.cloud.sap/btp-setup-automator:latest
-      credentials:
-        username: ${{ secrets.ARTIFACTORY_ID }}
-        password: ${{ secrets.ARTIFACTORY_KEY }}
+      image: shivakumarp12/btp-setup-automator:latest
       options: --user root
 
     # variables used only by the job integration-test, move to global, if cleanup or log job need them too
