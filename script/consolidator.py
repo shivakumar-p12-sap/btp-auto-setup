@@ -123,7 +123,6 @@ templateEnv = jinja2.Environment(loader=templateLoader)
 template = templateEnv.get_template(templateBasename)
 with open(filename, 'w') as fh:
     fh.write(template.render(
-        h1="Cross Consumption Kyma Test Results",
         h4=Indian_time,
         names=resultInfo
     ))
