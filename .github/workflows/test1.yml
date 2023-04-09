@@ -65,7 +65,7 @@ jobs:
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
           python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN}
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/k8s/ 
-          cp /home/user/btpsatest/logs/k8s/index.html /home/user/btpsatest/docs/ 
+          cp /home/user/btpsatest/logs/k8s/index.html /home/user/btpsatest/docs/k8s/ 
           cd btpsatest
           git config --global user.name "E2EVal-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
