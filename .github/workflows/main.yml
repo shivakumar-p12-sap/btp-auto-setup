@@ -55,8 +55,8 @@ jobs:
           -usecasefile kymausecase.json \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          [ -f "/home/user/log/script.log" ] && cp /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
-          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
+          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
 
       - name: 'Test Credstore service and API'
         if: success() || failure()
@@ -71,8 +71,8 @@ jobs:
           -usecasefile kymausecase.json \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          [ -f "/home/user/log/script.log" ] && cp /home/user/log/script.log /home/user/logs/k8s/report/credstore-standard.log
-          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/credstore-standard.json
+          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/credstore-standard.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/credstore-standard.json
 
       - name: 'Test Auditlog service with plan oauth2 and API'
         if: success() || failure()
@@ -87,8 +87,8 @@ jobs:
           -usecasefile kymausecase.json \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          [ -f "/home/user/log/script.log" ] && cp /home/user/log/script.log /home/user/logs/k8s/report/auditlog-oauth2.log
-          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-oauth2.json
+          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/auditlog-oauth2.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-oauth2.json
 
       - name: 'Upload reports'
         if: success() || failure()
@@ -99,7 +99,6 @@ jobs:
           ls -la
           cp /home/user/log/*.log /home/user/logs/k8s/report/
           rm /home/user/logs/k8s/report/index.html
-          rm /home/user/logs/k8s/report/apitestresult.json
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
           python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma"
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
@@ -112,69 +111,69 @@ jobs:
           git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
           git push            
 
-  integration-test-gardner:
-    runs-on: ubuntu-latest
-    container:
-      image: shivakumarp12/btp-setup-automator:latest
-      options: --user root
-    env:
-      BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
-      BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
-      BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
-      USE_CASES: ${{ github.workspace }}
-      GIT_TOOL_TOKEN: ${{ secrets.GIT_TOOL_TOKEN }}
-      KUBECONFIG_PATH: ${{ github.workspace }}/.kube/serviceaccount.yaml 
+  # integration-test-gardner:
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: shivakumarp12/btp-setup-automator:latest
+  #     options: --user root
+  #   env:
+  #     BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
+  #     BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
+  #     BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
+  #     USE_CASES: ${{ github.workspace }}
+  #     GIT_TOOL_TOKEN: ${{ secrets.GIT_TOOL_TOKEN }}
+  #     KUBECONFIG_PATH: ${{ github.workspace }}/.kube/serviceaccount.yaml 
 
-    steps:
-      - name: store kubeconfig
-        shell: bash
-        run: |
-          mkdir -p ${{ github.workspace }}/.kube && \
-          chown 777 ${{ github.workspace }}/.kube && \
-          printf "${{ secrets.SERVICE_ACCOUNT_GARDNER }}" > ${{ env.KUBECONFIG_PATH }}
-      - name: checkout repository
-        uses: actions/checkout@v2          
-      - name: Authenticate with Kubernetes
-        uses: azure/k8s-set-context@v2
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.SERVICE_ACCOUNT_GARDNER }}
-      - name: Check connection
-        shell: bash
-        run: |
-          kubectl get ns
-      - name: 'Test Alert notification service and API'
-        if: success() || failure()
-        working-directory: /home/user
-        shell: bash
-        run: |
-          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-alert-notification-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
-          python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
-          -usecasefile kymausecase.json \
-          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          cp /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
-          cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
-      - name: 'Upload reports'
-        if: success() || failure()
-        working-directory: /home/user
-        shell: bash
-        run: |
-          git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
-          ls -la
-          cp /home/user/log/*.log /home/user/logs/k8s/report/
-          rm /home/user/logs/k8s/report/index.html
-          rm /home/user/logs/k8s/report/apitestresult.json
-          cp ${USE_CASES}/script/template_k8s_index.html /home/user/config/templates/report/index.html
-          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "k8s"
-          cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/k8s/ 
-          cp /home/user/btpsatest/logs/k8s/index.html /home/user/btpsatest/docs/k8s/ 
-          cd btpsatest
-          git config --global user.name "E2EVal-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Log Commit $(TZ=IST-5:30 date +%F_%T) IST"
-          git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
-          git push
+  #   steps:
+  #     - name: store kubeconfig
+  #       shell: bash
+  #       run: |
+  #         mkdir -p ${{ github.workspace }}/.kube && \
+  #         chown 777 ${{ github.workspace }}/.kube && \
+  #         printf "${{ secrets.SERVICE_ACCOUNT_GARDNER }}" > ${{ env.KUBECONFIG_PATH }}
+  #     - name: checkout repository
+  #       uses: actions/checkout@v2          
+  #     - name: Authenticate with Kubernetes
+  #       uses: azure/k8s-set-context@v2
+  #       with:
+  #         method: kubeconfig
+  #         kubeconfig: ${{ secrets.SERVICE_ACCOUNT_GARDNER }}
+  #     - name: Check connection
+  #       shell: bash
+  #       run: |
+  #         kubectl get ns
+  #     - name: 'Test Alert notification service and API'
+  #       if: success() || failure()
+  #       working-directory: /home/user
+  #       shell: bash
+  #       run: |
+  #         kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+  #         cat "${USE_CASES}/use_cases/SERVICE-kyma-alert-notification-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+  #         python3 btpsa \
+  #         -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+  #         -usecasefile kymausecase.json \
+  #         -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+  #         -k8snamespace ${{ env.K8S_NAMESPACE }} 
+  #         cp /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
+  #         cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
+  #     - name: 'Upload reports'
+  #       if: success() || failure()
+  #       working-directory: /home/user
+  #       shell: bash
+  #       run: |
+  #         git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
+  #         ls -la
+  #         cp /home/user/log/*.log /home/user/logs/k8s/report/
+  #         rm /home/user/logs/k8s/report/index.html
+  #         rm /home/user/logs/k8s/report/apitestresult.json
+  #         cp ${USE_CASES}/script/template_k8s_index.html /home/user/config/templates/report/index.html
+  #         python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "k8s"
+  #         cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/k8s/ 
+  #         cp /home/user/btpsatest/logs/k8s/index.html /home/user/btpsatest/docs/k8s/ 
+  #         cd btpsatest
+  #         git config --global user.name "E2EVal-actions[bot]"
+  #         git config user.email "github-actions[bot]@users.noreply.github.com"
+  #         git add .
+  #         git commit -m "Log Commit $(TZ=IST-5:30 date +%F_%T) IST"
+  #         git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
+  #         git push

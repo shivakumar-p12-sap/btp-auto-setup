@@ -72,60 +72,99 @@ def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserN
         sys.exit(os.EX_DATAERR)
     return data
 
-
-json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
-print("Json files list : ")
-print('\n'.join(map(str, json_files)))
+log_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.log')
+# print("Log files list : ")
+# print('\n'.join(map(str, log_files)))
 
 
 content = []
-for filename in json_files:
-    print("IN Loop : "+filename)
-    with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
-        json_decoded = json.load(f)
-        print(len(json_decoded))
-        if len(json_decoded) > 0:
-          logfile = filename.replace(".json", ".log")
-          print("CRETED log file name : "+logfile)
-          if sys.argv[2] == "k8s":
-            json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/k8s/'+logfile
-          else:
-            json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/'+logfile
-          print("LogLINK : "+json_decoded[0]['loglink'])
-          print("SERVICE ID : "+json_decoded[0]['serviceid'])
-          json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
-          print("githubissue : "+json_decoded[0]['githubissue'])
-          if json_decoded[0]['githubissue'] == "none":
-            json_decoded[0]['issuenumber']="none"
-          else:
-            x = json_decoded[0]['githubissue'].split("/")
-            json_decoded[0]['issuenumber']=x[len(x)-1]          
-          source_logfile="/home/user/logs/k8s/report/"+logfile
-          with open(source_logfile, 'r') as file:
-            log_content = file.read()
-            json_decoded[0]['deleteStatus']='Failed'
-            if 'is now available' in log_content:
-              json_decoded[0]['creationStatus']='Pass'
-            else:
-              json_decoded[0]['creationStatus']='Failed'
-            if 'all service instances now deleted' in log_content:
-              json_decoded[0]['deleteStatus']='Pass'
-          content += json_decoded
+for logfile in log_files:
+  print("IN Loop : "+logfile)
+  json_file=logfile.replace(".log", ".json")
+  if os.path.exists("/home/user/logs/k8s/report/"+logfile.replace(".log", ".json")):
+    with open("/home/user/logs/k8s/report/"+json_file, 'r') as f:
+      json_decoded = json.load(f)
+      if len(json_decoded) > 0:
+        if sys.argv[2] == "k8s":
+          json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/k8s/'+logfile
         else:
-            print("SKIP : "+filename)
-with open('/home/user/logs/k8s/report/results.json', 'w') as f:
-    json.dump(content, f, indent=4)
+          json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/'+logfile
+        json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
+        if json_decoded[0]['githubissue'] == "none":
+          json_decoded[0]['issuenumber']="none"
+        else:
+          x = json_decoded[0]['githubissue'].split("/")
+          json_decoded[0]['issuenumber']=x[len(x)-1]
+        source_logfile="/home/user/logs/k8s/report/"+logfile
+        with open(source_logfile, 'r') as file:
+          log_content = file.read()
+          json_decoded[0]['deleteStatus']='Failed'
+          if 'is now available' in log_content:
+            json_decoded[0]['creationStatus']='Pass'
+          else:
+            json_decoded[0]['creationStatus']='Failed'
+          if 'all service instances now deleted' in log_content:
+            json_decoded[0]['deleteStatus']='Pass'
+        content += json_decoded
+      else:
+        print("SKIP : "+logfile)
+  else:
+      print("Workspace")
+      os.path.exists("/github/workspace/")
 
-resultInfo = getJsonFromFile('/home/user/logs/k8s/report/results.json')
-filename = '/home/user/logs/k8s/report/index.html'
-templateFilename = "/home/user/config/templates/report/index.html"
-templateFolder = os.path.dirname(templateFilename)
-templateBasename = os.path.basename(templateFilename)
-templateLoader = jinja2.FileSystemLoader(searchpath=templateFolder)
-templateEnv = jinja2.Environment(loader=templateLoader)
-template = templateEnv.get_template(templateBasename)
-with open(filename, 'w') as fh:
-    fh.write(template.render(
-        h4=Indian_time,
-        names=resultInfo
-    ))
+# json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
+# print("Json files list : ")
+# print('\n'.join(map(str, json_files)))
+
+
+# content = []
+# for filename in json_files:
+#     print("IN Loop : "+filename)
+#     with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
+#         json_decoded = json.load(f)
+#         print(len(json_decoded))
+#         if len(json_decoded) > 0:
+#           logfile = filename.replace(".json", ".log")
+#           print("CRETED log file name : "+logfile)
+#           if sys.argv[2] == "k8s":
+#             json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/k8s/'+logfile
+#           else:
+#             json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/'+logfile
+#           print("LogLINK : "+json_decoded[0]['loglink'])
+#           print("SERVICE ID : "+json_decoded[0]['serviceid'])
+#           json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
+#           print("githubissue : "+json_decoded[0]['githubissue'])
+#           if json_decoded[0]['githubissue'] == "none":
+#             json_decoded[0]['issuenumber']="none"
+#           else:
+#             x = json_decoded[0]['githubissue'].split("/")
+#             json_decoded[0]['issuenumber']=x[len(x)-1]          
+#           source_logfile="/home/user/logs/k8s/report/"+logfile
+#           with open(source_logfile, 'r') as file:
+#             log_content = file.read()
+#             json_decoded[0]['deleteStatus']='Failed'
+#             if 'is now available' in log_content:
+#               json_decoded[0]['creationStatus']='Pass'
+#             else:
+#               json_decoded[0]['creationStatus']='Failed'
+#             if 'all service instances now deleted' in log_content:
+#               json_decoded[0]['deleteStatus']='Pass'
+#           content += json_decoded
+#         else:
+#             print("SKIP : "+filename)
+# with open('/home/user/logs/k8s/report/results.json', 'w') as f:
+#     json.dump(content, f, indent=4)
+
+# resultInfo = getJsonFromFile('/home/user/logs/k8s/report/results.json')
+# filename = '/home/user/logs/k8s/report/index.html'
+# templateFilename = "/home/user/config/templates/report/index.html"
+# templateFolder = os.path.dirname(templateFilename)
+# templateBasename = os.path.basename(templateFilename)
+# templateLoader = jinja2.FileSystemLoader(searchpath=templateFolder)
+# templateEnv = jinja2.Environment(loader=templateLoader)
+# template = templateEnv.get_template(templateBasename)
+# with open(filename, 'w') as fh:
+#     fh.write(template.render(
+#         h4=Indian_time,
+#         names=resultInfo
+#     ))
