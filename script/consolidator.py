@@ -87,7 +87,10 @@ for filename in json_files:
         if len(json_decoded) > 0:
           logfile = filename.replace(".json", ".log")
           print("CRETED log file name : "+logfile)
-          json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
+          if sys.argv[2] == "k8s":
+            json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/k8s/'+logfile
+          else:
+            json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
           print("LogLINK : "+json_decoded[0]['loglink'])
           print("SERVICE ID : "+json_decoded[0]['serviceid'])
           json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])

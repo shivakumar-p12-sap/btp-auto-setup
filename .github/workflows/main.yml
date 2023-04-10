@@ -57,7 +57,23 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           [ -f "/home/user/log/script.log" ] && cp /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
-    
+
+      - name: 'Test Credstore service and API'
+        if: success() || failure()
+        working-directory: /home/user
+        shell: bash
+        run: |
+          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+          cat "${USE_CASES}/use_cases/SERVICE-kyma-credstore-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+          set +e
+          python3 btpsa \
+          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+          -usecasefile kymausecase.json \
+          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          -k8snamespace ${{ env.K8S_NAMESPACE }} 
+          [ -f "/home/user/log/script.log" ] && cp /home/user/log/script.log /home/user/logs/k8s/report/credstore-standard.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && cp /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/credstore-standard.json
+
       - name: 'Test Auditlog service with plan oauth2 and API'
         if: success() || failure()
         working-directory: /home/user
@@ -85,7 +101,7 @@ jobs:
           rm /home/user/logs/k8s/report/index.html
           rm /home/user/logs/k8s/report/apitestresult.json
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
-          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN}
+          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma"
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
           cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
           cd btpsatest
@@ -152,7 +168,7 @@ jobs:
           rm /home/user/logs/k8s/report/index.html
           rm /home/user/logs/k8s/report/apitestresult.json
           cp ${USE_CASES}/script/template_k8s_index.html /home/user/config/templates/report/index.html
-          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN}
+          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "k8s"
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/k8s/ 
           cp /home/user/btpsatest/logs/k8s/index.html /home/user/btpsatest/docs/k8s/ 
           cd btpsatest
