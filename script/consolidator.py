@@ -110,7 +110,7 @@ for logfile in log_files:
         print("SKIP : "+logfile)
   else:
       print("Workspace")
-      os.path.exists("/github/workspace/")
+      print(os.path.exists("/github/workspace/"))
 
 # json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
 # print("Json files list : ")
