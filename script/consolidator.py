@@ -113,7 +113,7 @@ for logfile in log_files:
       print(os.path.exists("/github/workspace/"))
       url='https://raw.githubusercontent.com/shivakumar-p12-sap/btp-auto-setup/main/use_cases/SERVICE-kyma-adsrestapi-standard-use-case.json'
       page = requests.get(url)
-      print page.text
+      print (page.text)
       data = json.loads(page.text)
       print(data)
 # json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
