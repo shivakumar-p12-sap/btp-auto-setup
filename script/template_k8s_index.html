@@ -30,8 +30,24 @@
 
 <h1>Cross Consumption K8s(Gardner) Test Results</h1>
 <h4>Last Execution Data&Time: {{ h4 }}</h4> 
-<h6>Manually Tested: 60</h6>
-<h6>Automated Test: {{ names | length }}</h6>
+<table id="history">
+  <tr>
+    <th>Execution date</th>
+    <th>Manual Test</th>
+    <th>Automated Test</th>
+    <th>Passed</th>
+    <th>Failed</th>
+  </tr>
+  {% for record in history %}
+  <tr>
+    <td>{{ record.currentExecutionTime }}</td>
+    <td>{{ record.manualTestCount }}</td>
+    <td>{{ record.automatedTestCount }}</td>
+    <td>{{ record.passedCount }}</td>
+    <td>{{ record.failedCount }}</td>
+  </tr>
+  {% endfor %}
+</table>
 <table id="results">
   <tr>
     <th>Slno</th>

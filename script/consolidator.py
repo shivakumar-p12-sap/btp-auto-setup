@@ -146,10 +146,42 @@ for logfile in log_files:
         }
       faileddatajson =json.dumps(faileddata)
       content.append(json.loads(faileddatajson))
-  
+
+passed=0
+failed=0
+for data in content:
+  if data['status'] == "Pass" and data['creationStatus'] == "Pass" and data['deleteStatus'] == "Pass":
+    passed=passed+1
+  else:
+    failed=failed+1 
+
+url=f"https://raw.github.tools.sap/BTP-E2EScenarioValidation/btpsatest/main/logs/history.json"
+headers = {
+        'Authorization': 'Bearer '+sys.argv[1],
+        'Cookie': 'logged_in=no'
+        }
+response = requests.request("GET", url, headers=headers)
+history=response.json()
+
+#print(history[len(history)-1]['currentExecutionTime'])
+
+historyData={
+'currentExecutionTime':Indian_time,
+'manualTestCount':60,
+'automatedTestCount':len(content),
+'passedCount':passed,
+'failedCount':failed
+}  
+
+historyData =json.dumps(historyData)
+history.append(json.loads(historyData))
+
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
     json.dump(content, f, indent=4) 
- 
+
+with open('/home/user/logs/k8s/report/history.json', 'w') as f:
+    json.dump(history, f, indent=4) 
+
 resultInfo = getJsonFromFile('/home/user/logs/k8s/report/results.json')
 filename = '/home/user/logs/k8s/report/index.html'
 templateFilename = "/home/user/config/templates/report/index.html"
@@ -161,5 +193,6 @@ template = templateEnv.get_template(templateBasename)
 with open(filename, 'w') as fh:
     fh.write(template.render(
         h4=Indian_time,
-        names=resultInfo
+        names=resultInfo,
+        history=reversed(history)
     ))
