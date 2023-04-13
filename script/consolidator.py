@@ -10,6 +10,7 @@ import datetime as dt
 dt_India = dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
 Indian_time = dt_India.strftime('%d-%b-%y %H:%M:%S')
 
+
 pagenum=1
 gitissues=[]
 while(True):
@@ -71,45 +72,117 @@ def getJsonFromFile(filename, externalConfigAuthMethod=None, externalConfigUserN
         sys.exit(os.EX_DATAERR)
     return data
 
-
-json_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.json')
-print("Json files list : ")
-#print('\n'.join(map(str, json_files)))
+log_files = fnmatch.filter(os.listdir("/home/user/logs/k8s/report/"),'*.log')
 
 content = []
-for filename in json_files:
-#    print("IN Loop : "+filename)
-    with open("/home/user/logs/k8s/report/"+filename, 'r') as f:
-        json_decoded = json.load(f)
-#        print(len(json_decoded))
-        if len(json_decoded) > 0:
-          logfile = filename.replace(".json", ".log")
-#          print("CRETED log file name : "+logfile)
-          json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
-#          print("LogLINK : "+json_decoded[0]['loglink'])
-#          print("SERVICE ID : "+json_decoded[0]['serviceid'])
-          json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
-#          print("githubissue : "+json_decoded[0]['githubissue'])
-          if json_decoded[0]['githubissue'] == "none":
-            json_decoded[0]['issuenumber']="none"
-          else:
-            x = json_decoded[0]['githubissue'].split("/")
-            json_decoded[0]['issuenumber']=x[len(x)-1]          
-          source_logfile="/home/user/logs/k8s/report/"+logfile
-          with open(source_logfile, 'r') as file:
-            log_content = file.read()
-            json_decoded[0]['deleteStatus']='Failed'
-            if 'is now available' in log_content:
-              json_decoded[0]['creationStatus']='Pass'
-            else:
-              json_decoded[0]['creationStatus']='Failed'
-            if 'all service instances now deleted' in log_content:
-              json_decoded[0]['deleteStatus']='Pass'
-          content += json_decoded
+for logfile in log_files:
+  json_file=logfile.replace(".log", ".json")
+  if os.path.exists("/home/user/logs/k8s/report/"+logfile.replace(".log", ".json")):
+    with open("/home/user/logs/k8s/report/"+json_file, 'r') as f:
+      json_decoded = json.load(f)
+      if len(json_decoded) > 0:
+        if sys.argv[2] == "k8s":
+          json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/k8s/'+logfile
         else:
-            print("SKIPPED : "+filename)
+          json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
+        json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
+        if json_decoded[0]['githubissue'] == "none":
+          json_decoded[0]['issuenumber']="none"
+        else:
+          x = json_decoded[0]['githubissue'].split("/")
+          json_decoded[0]['issuenumber']=x[len(x)-1]
+        source_logfile="/home/user/logs/k8s/report/"+logfile
+        with open(source_logfile, 'r') as file:
+          log_content = file.read()
+          json_decoded[0]['deleteStatus']='Failed'
+          if 'is now available' in log_content:
+            json_decoded[0]['creationStatus']='Pass'
+          else:
+            json_decoded[0]['creationStatus']='Failed'
+          if 'all service instances now deleted' in log_content:
+            json_decoded[0]['deleteStatus']='Pass'
+          if json_decoded[0]['status'] != "No API's":
+            if 'API call is successful!' in log_content:
+              json_decoded[0]['status']='Pass'
+            else:
+              json_decoded[0]['status']='Failed'
+        content += json_decoded
+      else:
+        print("SKIP : "+logfile)
+  else:
+      filename=json_file.rsplit('.', maxsplit=1)[0]
+      url=f"https://raw.githubusercontent.com/shivakumar-p12-sap/btp-auto-setup/main/use_cases/SERVICE-kyma-{filename}-use-case.json"
+      page = requests.get(url)
+      data = json.loads(page.text)
+      loglink=''
+      if sys.argv[2] == "k8s":
+        loglink='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/k8s/'+logfile
+      else:
+        loglink='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
+      githubissue=check_git_issue(data['services'][0]["api_resource_uri"]["serviceID"])
+      issuenumber=''
+      if githubissue != "none":
+        x = githubissue.split("/")
+        issuenumber=x[len(x)-1]
+      source_logfile="/home/user/logs/k8s/report/"+logfile
+      deleteStatus='Failed'
+      creationStatus='Failed'      
+      with open(source_logfile, 'r') as file:
+        log_content = file.read()
+        if 'is now available' in log_content:
+          creationStatus='Pass'
+        if 'all service instances now deleted' in log_content:
+          deleteStatus='Pass'          
+      faileddata={
+         'service': data['services'][0]['name'],
+         'plan': data['services'][0]['plan'],
+         'serviceid': data['services'][0]["api_resource_uri"]["serviceID"],
+         'status': "Failed",
+         'loglink': loglink,
+         'githubissue': githubissue,
+         'issuenumber': issuenumber,
+         'deleteStatus': deleteStatus,
+         'creationStatus': creationStatus
+        }
+      faileddatajson =json.dumps(faileddata)
+      content.append(json.loads(faileddatajson))
+
+passed=0
+failed=0
+for data in content:
+  if data['status'] == "Pass" and data['creationStatus'] == "Pass" and data['deleteStatus'] == "Pass":
+    passed=passed+1
+  else:
+    failed=failed+1 
+
+url=f"https://raw.github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/main/logs/history.json"
+if sys.argv[2] == "k8s":
+   url=f"https://raw.github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/main/logs/k8s/history.json"
+headers = {
+        'Authorization': 'Bearer '+sys.argv[1],
+        'Cookie': 'logged_in=no'
+        }
+response = requests.request("GET", url, headers=headers)
+history=response.json()
+
+#print(history[len(history)-1]['currentExecutionTime'])
+
+historyData={
+'currentExecutionTime':Indian_time,
+'manualTestCount':60,
+'automatedTestCount':len(content),
+'passedCount':passed,
+'failedCount':failed
+}  
+
+historyData =json.dumps(historyData)
+history.append(json.loads(historyData))
+
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
-    json.dump(content, f, indent=4)
+    json.dump(content, f, indent=4) 
+
+with open('/home/user/logs/k8s/report/history.json', 'w') as f:
+    json.dump(history, f, indent=4) 
 
 resultInfo = getJsonFromFile('/home/user/logs/k8s/report/results.json')
 filename = '/home/user/logs/k8s/report/index.html'
@@ -122,5 +195,6 @@ template = templateEnv.get_template(templateBasename)
 with open(filename, 'w') as fh:
     fh.write(template.render(
         h4=Indian_time,
-        names=resultInfo
+        names=resultInfo,
+        history=reversed(history)
     ))
