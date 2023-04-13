@@ -1,38 +1,39 @@
 {
   "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
   "services": [
-    {
-      "name": "dq-services",
-      "plan": "standard",
-      "category": "SERVICE",
-      "targetenvironment": "kymaruntime",
-      "parameters": {
-	      "xs-security": {
-		      "xsappname": "dq-scenario-workflow-e2e",
-		      "authorities": [
-			     "$ACCEPT_GRANTED_AUTHORITIES"
-		     ],
-		    "oauth2-configuration": {
-			      "credential-types": [
-				      "binding-secret",
-				     "x509"
-			      ]
-		      }
-	      },
-      "createServiceKeys": [
-        "dq-services-standard"
-      ],
-      "api_resource_uri": {
-        "testapi": "/dq/refData/country",
-        "apiBaseUrlPathKey": "data.uri",
-        "oauthurlPathkey": "data.uaa.url",
-        "clientId_basicUN_PathKey": "data.uaa.clientid",
-        "clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
-        "authMethod": "oauth",
-        "APITest": "yes",
-        "serviceID": "SERVICE-536"
-      }
-    }
+{
+	"name": "dq-services",
+	"plan": "standard",
+	"category": "SERVICE",
+	"targetenvironment": "kymaruntime",
+	"parameters": {
+		"xs-security": {
+			"xsappname": "dq-scenario-btpauto-e2e",
+			"authorities": [
+				"$ACCEPT_GRANTED_AUTHORITIES"
+			],
+			"oauth2-configuration": {
+				"credential-types": [
+					"binding-secret",
+					"x509"
+				]
+			}
+		}
+	},
+	"createServiceKeys": [
+		"dq-services-standard"
+	],
+	"api_resource_uri": {
+		"testapi": "/dq/refData/country",
+		"apiBaseUrlPathKey": "data.uri",
+		"oauthurlPathkey": "data.uaa.url",
+		"clientId_basicUN_PathKey": "data.uaa.clientid",
+		"clientSecret_basicPW_PathKey": "data.uaa.clientsecret",
+		"authMethod": "oauth",
+		"APITest": "yes",
+		"serviceID": "SERVICE-536"
+	}
+}
   ],
   "enableAPITest": true
 }
