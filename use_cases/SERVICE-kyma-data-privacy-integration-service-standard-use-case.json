@@ -220,6 +220,12 @@
           "authorities": [
             "$ACCEPT_GRANTED_AUTHORITIES"
           ],
+           "oauth2-configuration": {
+            "credential-types": [
+              "binding-secret",
+              "x509"
+            ]
+          },
           "xsappname": "dpp-h2r-reference-app-kymatest"
         }
       },
