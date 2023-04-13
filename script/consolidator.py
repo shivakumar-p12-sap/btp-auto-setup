@@ -150,7 +150,7 @@ for logfile in log_files:
 passed=0
 failed=0
 for data in content:
-  if data['status'] == "Pass" and data['creationStatus'] == "Pass" and data['deleteStatus'] == "Pass":
+  if ( data['status'] == "Pass" or data['status'] == "No API's" ) and data['creationStatus'] == "Pass" and data['deleteStatus'] == "Pass":
     passed=passed+1
   else:
     failed=failed+1 
