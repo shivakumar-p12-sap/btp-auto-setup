@@ -8,7 +8,7 @@ env:
   K8S_NAMESPACE: btpsa
 
 jobs:
-  integration-test-kyma:
+  integration-test:
     runs-on: ubuntu-latest
     container:
       image: shivakumarp12/btp-setup-automator:latest
