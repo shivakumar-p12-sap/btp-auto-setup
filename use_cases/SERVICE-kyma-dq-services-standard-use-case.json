@@ -6,6 +6,19 @@
       "plan": "standard",
       "category": "SERVICE",
       "targetenvironment": "kymaruntime",
+      "parameters": {
+	      "xs-security": {
+		      "xsappname": "dq-scenario-workflow-e2e",
+		      "authorities": [
+			     "$ACCEPT_GRANTED_AUTHORITIES"
+		     ],
+		    "oauth2-configuration": {
+			      "credential-types": [
+				      "binding-secret",
+				     "x509"
+			      ]
+		      }
+	      },
       "createServiceKeys": [
         "dq-services-standard"
       ],
