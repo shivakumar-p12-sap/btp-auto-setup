@@ -176,6 +176,10 @@ historyData={
 historyData =json.dumps(historyData)
 history.append(json.loads(historyData))
 
+def myFunc(e):
+  return e['service']
+content.sort(key=myFunc)
+
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
     json.dump(content, f, indent=4) 
 
