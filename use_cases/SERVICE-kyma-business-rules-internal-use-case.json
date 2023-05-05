@@ -1,0 +1,21 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+    "services": [
+      {
+        "name": "business-rules",
+        "plan": "internal",
+        "category": "SERVICE",
+        "targetenvironment": "kymaruntime",
+        "createServiceKeys": [
+          "business-rules-internal"
+        ],
+        "api_resource_uri": {
+          "APITest": "no",
+          "authMethod": "oauth",
+          "serviceID": "SERVICE-224"
+        }
+      }
+    ],
+    "enableAPITest": true
+  }
+  
