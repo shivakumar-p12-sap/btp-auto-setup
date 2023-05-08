@@ -102,7 +102,8 @@ jobs:
           cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
           python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma"
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
-          cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
+          cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/
+          cp /home/user/btpsatest/logs/history.html /home/user/btpsatest/docs/  
           cd btpsatest
           git config --global user.name "E2EVal-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
