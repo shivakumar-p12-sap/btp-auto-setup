@@ -1,0 +1,21 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+    "services": [
+      {
+        "name": "3dvisualization-dev",
+        "plan": "standard-saas",
+        "category": "SERVICE",
+        "targetenvironment": "kymaruntime",
+        "createServiceKeys": [
+          "3dvisualization-dev-standard-saas"
+        ],
+        "api_resource_uri": {
+          "APITest": "no",
+          "authMethod": "oauth",
+          "serviceID": "SERVICE-155"
+        }
+      }
+    ],
+    "enableAPITest": true
+  }
+  

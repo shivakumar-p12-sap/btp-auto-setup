@@ -100,7 +100,8 @@ jobs:
           rm /home/user/logs/k8s/report/index.html
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
           cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
-          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma"
+          commitmessage="Log Commit $(TZ=IST-5:30 date +%F_%T) IST"
+          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma" $commitmessage
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
           cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/
           cp /home/user/btpsatest/logs/history.html /home/user/btpsatest/docs/  
@@ -108,7 +109,7 @@ jobs:
           git config --global user.name "E2EVal-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Log Commit $(TZ=IST-5:30 date +%F_%T) IST"
+          git commit -m commitmessage
           git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/btpsatest.git
           git push            
 

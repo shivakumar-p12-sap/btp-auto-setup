@@ -174,7 +174,8 @@ historyData={
 'manualTestCount':74,
 'automatedTestCount':len(content),
 'passedCount':passed,
-'failedCount':failed
+'failedCount':failed,
+'commitmessage':sys.argv[3]
 }  
 
 historyData =json.dumps(historyData)

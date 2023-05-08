@@ -1,0 +1,21 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+    "services": [
+      {
+        "name": "conversational-ai",
+        "plan": "standard",
+        "category": "SERVICE",
+        "targetenvironment": "kymaruntime",
+        "createServiceKeys": [
+          "conversational-ai-standard"
+        ],
+        "api_resource_uri": {
+          "APITest": "no",
+          "authMethod": "oauth",
+          "serviceID": "SERVICE-402"
+        }
+      }
+    ],
+    "enableAPITest": true
+  }
+  
