@@ -99,6 +99,7 @@ jobs:
           ls -la
           rm /home/user/logs/k8s/report/index.html
           cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
+          cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
           python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma"
           cp /home/user/logs/k8s/report/* /home/user/btpsatest/logs/ 
           cp /home/user/btpsatest/logs/index.html /home/user/btpsatest/docs/ 
