@@ -81,7 +81,7 @@ for logfile in log_files:
     with open("/home/user/logs/k8s/report/"+json_file, 'r') as f:
       json_decoded = json.load(f)
       if len(json_decoded) > 0:
-        if envir == "k8s":
+        if sys.argv[2] == "k8s":
           json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/btpsatest/blob/main/logs/k8s/'+logfile
           historylink="https://pages.github.tools.sap/BTP-E2EScenarioValidation/btpsatest/k8s/history.html"
         else:
