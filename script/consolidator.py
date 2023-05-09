@@ -10,7 +10,6 @@ import datetime as dt
 dt_India = dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
 Indian_time = dt_India.strftime('%d-%b-%y %H:%M:%S')
 
-
 pagenum=1
 gitissues=[]
 while(True):
@@ -83,8 +82,10 @@ for logfile in log_files:
       if len(json_decoded) > 0:
         if sys.argv[2] == "k8s":
           json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/k8s/'+logfile
+          historylink="https://pages.github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/k8s/history.html"
         else:
           json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/'+logfile
+          historylink="https://pages.github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/history.html"
         json_decoded[0]['githubissue']=check_git_issue(json_decoded[0]['serviceid'])
         if json_decoded[0]['githubissue'] == "none":
           json_decoded[0]['issuenumber']="none"
@@ -169,15 +170,19 @@ history=response.json()
 
 historyData={
 'currentExecutionTime':Indian_time,
-'manualTestCount':60,
+'manualTestCount':74,
 'automatedTestCount':len(content),
 'passedCount':passed,
-'failedCount':failed
+'failedCount':failed,
+'commitmessage':sys.argv[3]
 }  
 
 historyData =json.dumps(historyData)
 history.append(json.loads(historyData))
 
+def myFunc(e):
+  return e['service']
+content.sort(key=myFunc)
 with open('/home/user/logs/k8s/report/results.json', 'w') as f:
     json.dump(content, f, indent=4) 
 
@@ -195,6 +200,18 @@ template = templateEnv.get_template(templateBasename)
 with open(filename, 'w') as fh:
     fh.write(template.render(
         h4=Indian_time,
-        names=resultInfo,
+        historylink=historylink,
+        names=resultInfo
+    ))
+
+filename = '/home/user/logs/k8s/report/history.html'
+templateFilename = "/home/user/config/templates/report/history.html"
+templateFolder = os.path.dirname(templateFilename)
+templateBasename = os.path.basename(templateFilename)
+templateLoader = jinja2.FileSystemLoader(searchpath=templateFolder)
+templateEnv = jinja2.Environment(loader=templateLoader)
+template = templateEnv.get_template(templateBasename)
+with open(filename, 'w') as fh:
+    fh.write(template.render(
         history=reversed(history)
     ))

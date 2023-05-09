@@ -25,35 +25,23 @@
   color: white;
 }
 
-#history table, #history th, #history td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}  
-
+.error {
+  color: red;
+}
+.success {
+  color: black;
+}
 </style>
 </head>
 <body>
 
 <h1>Cross Consumption K8s(Gardner) Test Results</h1>
+<h4>Landscape: Canary</h4> 
 <h4>Last Execution Data&Time: {{ h4 }}</h4> 
-<table id="history">
-  <tr>
-    <th>Execution date</th>
-    <th>Manual Test</th>
-    <th>Automated Test</th>
-    <th>Passed</th>
-    <th>Failed</th>
-  </tr>
-  {% for record in history %}
-  <tr>
-    <td>{{ record.currentExecutionTime }}</td>
-    <td>{{ record.manualTestCount }}</td>
-    <td>{{ record.automatedTestCount }}</td>
-    <td>{{ record.passedCount }}</td>
-    <td>{{ record.failedCount }}</td>
-  </tr>
-  {% endfor %}
-</table>
+<hr>
+<h5><a href="{{historylink}}" target="_blank">Execution History</a></h5> 
+
+
 <table id="results">
   <tr>
     <th>Slno</th>
@@ -69,18 +57,25 @@
     <th>Log</th>
   </tr>
   {% for name in names %}
+
+  {% if name.status == "Pass" and name.deleteStatus == "Pass" and name.creationStatus == "Pass" %}
+    {% set row_class = "success" %}
+  {% else %}
+    {% set row_class = "error" %}
+  {% endif %}
+
   <tr>
-    <td>{{loop.index}}</td>
-    <td>{{ name.service }}</td>
-    <td>{{name.plan}}</td>
-    <td><a href="https://services.tools.sap/#/perspective/cross-consumption/service/{{name.serviceid}}" target="_blank">{{name.serviceid}}</a></td>
-    <td>GET</td>
-    <td>{{name.endpoint}}</td>
-    <td>{{name.creationStatus}}</td>
-    <td>{{name.status}}</td>
-    <td>{{name.deleteStatus}}</td>
-    <td><a href="{{name.githubissue}}" target="_blank">Issue-{{name.issuenumber}}</a></td>
-    <td><a href="{{name.loglink}}" target="_blank">Log</a></td>
+    <td class="{{ row_class }}">{{loop.index}}</td>
+    <td class="{{ row_class }}">{{ name.service }}</td>
+    <td class="{{ row_class }}">{{name.plan}}</td>
+    <td class="{{ row_class }}"><a href="https://services.tools.sap/#/perspective/cross-consumption/service/{{name.serviceid}}" target="_blank">{{name.serviceid}}</a></td>
+    <td class="{{ row_class }}">GET</td>
+    <td class="{{ row_class }}">{{name.endpoint}}</td>
+    <td class="{{ row_class }}">{{name.creationStatus}}</td>
+    <td class="{{ row_class }}">{{name.status}}</td>
+    <td class="{{ row_class }}">{{name.deleteStatus}}</td>
+    <td class="{{ row_class }}"><a href="{{name.githubissue}}" target="_blank">Issue-{{name.issuenumber}}</a></td>
+    <td class="{{ row_class }}"><a href="{{name.loglink}}" target="_blank">Log</a></td>
   </tr>
   {% endfor %}
 </table>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#results {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#results td, #results th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#results tr:nth-child(even){background-color: #f2f2f2;}
+
+#results tr:hover {background-color: #ddd;}
+
+#results th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+#history table, #history th, #history td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}  
+
+</style>
+</head>
+<body>
+
+<h1>Cross Consumption Test Results history</h1>
+
+<table id="history">
+  <tr>
+    <th>Execution date</th>
+    <th>Manual Test</th>
+    <th>Automated Test</th>
+    <th>Passed</th>
+    <th>Failed</th>
+  </tr>
+  {% for record in history %}
+  <tr>
+    <td>{{ record.currentExecutionTime }}</td>
+    <td>{{ record.manualTestCount }}</td>
+    <td>{{ record.automatedTestCount }}</td>
+    <td>{{ record.passedCount }}</td>
+    <td>{{ record.failedCount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
