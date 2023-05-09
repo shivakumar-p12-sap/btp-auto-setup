@@ -58,7 +58,7 @@
   </tr>
   {% for name in names %}
 
-  {% if name.status == "Pass" and name.deleteStatus == "Pass" and name.creationStatus == "Pass" %}
+  {% if (name.status == "Pass" or name.status == "No API's") and name.deleteStatus == "Pass" and name.creationStatus == "Pass" %}
     {% set row_class = "success" %}
   {% else %}
     {% set row_class = "error" %}
