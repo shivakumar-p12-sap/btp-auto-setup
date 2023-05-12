@@ -1,21 +1,38 @@
 {
-    "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
-    "services": [
-      {
-        "name": "subscription-manager",
-        "plan": "provider",
-        "category": "SERVICE",
-        "targetenvironment": "kymaruntime",
-        "createServiceKeys": [
-          "subscription-manager-provider"
-        ],
-        "api_resource_uri": {
-          "APITest": "no",
-          "authMethod": "oauth",
-          "serviceID": "SERVICE-859"
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "subscription-manager",
+      "plan": "provider",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "parameters": {
+        "applicationType": "application",
+        "supportApplication": true,
+        "iasServiceInstanceId": "62efd84778445f5c5ee9cffa",
+        "appCallbacks": {
+          "dependenciesCallbacks": {
+            "url": "https://ayumwyw5e.accounts400.ondemand.com/v1/callback/zones/{zoneId}/dependencies"
+          },
+          "subscriptionCallbacks": {
+            "url": "https://ayumwyw5e.accounts400.ondemand.com/v1/callback/zones/{zoneId}"
+          }
         }
+      },
+      "createServiceKeys": [
+        "subscription-manager-provider"
+      ],
+      "api_resource_uri": {
+        "testapi": "/subscription-manager/v1/applications",
+        "apiBaseUrlPathKey": "data.subscription_manager_url",
+        "oauthurlPathkey": "data.url",
+        "clientId_basicUN_PathKey": "data.clientid",
+        "clientSecret_basicPW_PathKey": "data.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-859"
       }
-    ],
-    "enableAPITest": true
-  }
-  
+    }
+  ],
+  "enableAPITest": true
+}

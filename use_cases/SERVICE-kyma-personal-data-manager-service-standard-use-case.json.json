@@ -2,17 +2,17 @@
   "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
   "services": [
     {
-      "name": "grc-businesscontenthub",
+      "name": "personal-data-manager-service",
       "plan": "standard",
       "category": "SERVICE",
       "targetenvironment": "kymaruntime",
       "createServiceKeys": [
-        "grc-businesscontenthub-standard"
+        "personal-data-manager-service-standard"
       ],
       "api_resource_uri": {
         "APITest": "no",
         "authMethod": "oauth",
-        "serviceID": "SERVICE-490"
+        "serviceID": "SERVICE-259"
       }
     }
   ],
