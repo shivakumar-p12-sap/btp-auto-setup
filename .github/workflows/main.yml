@@ -106,21 +106,21 @@ jobs:
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/business-rules-internal.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/business-rules-internal.json
 
-      - name: 'Test Business Rules service and API'
+      - name: 'Test xfs-runtime-sandbox service and API'
         if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
           kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-business-rules-internal-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+          cat "${USE_CASES}/use_cases/SERVICE-kyma-xfs-runtime-sandbox-default-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
           set +e 
           python3 btpsa \
           -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
           -usecasefile kymausecase.json \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/business-rules-internal.log
-          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/business-rules-internal.json
+          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/xfs-runtime-sandbox-default.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/xfs-runtime-sandbox-default.json
 
       - name: 'Test Cloud Logging Service and API'
         if: success() || failure()
@@ -138,21 +138,21 @@ jobs:
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/cloud-logging-standard.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/cloud-logging-standard.json
 
-      - name: 'Test Cloud Logging Service and API'
+      - name: 'Test Subscription-manager Service and API'
         if: success() || failure()
         working-directory: /home/user
         shell: bash
         run: |
           kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-cloud-logging-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+          cat "${USE_CASES}/use_cases/SERVICE-kyma-subscription-manager-provider-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
           set +e 
           python3 btpsa \
           -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
           -usecasefile kymausecase.json \
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/cloud-logging-standard.log
-          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/cloud-logging-standard.json
+          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/subscription-manager-provider.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/subscription-manager-provider.json
 
       - name: 'Test Content Agent Service and API'
         if: success() || failure()
@@ -201,7 +201,7 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/sap-cash-application-production-internal-standard.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/sap-cash-application-production-internal-standard.json
-          
+
       - name: 'Upload reports'
         if: success() || failure()
         working-directory: /home/user
