@@ -1,0 +1,21 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+    "services": [
+      {
+        "name": "sirem",
+        "plan": "standard",
+        "category": "SERVICE",
+        "targetenvironment": "kymaruntime",
+        "createServiceKeys": [
+          "sirem-standard"
+        ],
+        "api_resource_uri": {
+          "APITest": "no",
+          "authMethod": "oauth",
+          "serviceID": "SERVICE-748"
+        }
+      }
+    ],
+    "enableAPITest": true
+  }
+  
