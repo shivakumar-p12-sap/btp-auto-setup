@@ -80,6 +80,7 @@ for logfile in log_files:
     with open("/home/user/logs/k8s/report/"+json_file, 'r') as f:
       json_decoded = json.load(f)
       if len(json_decoded) > 0:
+        json_decoded[0]['reference']=Indian_time
         if sys.argv[2] == "k8s":
           json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/k8s/'+logfile
           historylink="https://pages.github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/k8s/history.html"
@@ -143,7 +144,8 @@ for logfile in log_files:
          'githubissue': githubissue,
          'issuenumber': issuenumber,
          'deleteStatus': deleteStatus,
-         'creationStatus': creationStatus
+         'creationStatus': creationStatus,
+         'reference': Indian_time
         }
       faileddatajson =json.dumps(faileddata)
       content.append(json.loads(faileddatajson))
