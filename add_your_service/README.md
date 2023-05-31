@@ -1,0 +1,1 @@
+Add the json file wiht the structure of use case file to test your service for cross consumption
