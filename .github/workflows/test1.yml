@@ -37,7 +37,7 @@ jobs:
         uses: azure/k8s-set-context@v2
         with:
           method: kubeconfig
-          kubeconfig: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
+          kubeconfig: ${{ env.KUBECONFIG_PATH }}
       - name: Check connection
         shell: bash
         run: |
