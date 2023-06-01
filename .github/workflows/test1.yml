@@ -34,10 +34,9 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2          
       - name: Authenticate with Kubernetes
-        uses: azure/k8s-set-context@v2
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
       - name: Check connection
         shell: bash
         run: |
