@@ -44,7 +44,8 @@ jobs:
       - name: Check connection
         shell: bash
         run: |
-          kubectl get ns 
+          kubectl get ns
+          git config --global --add safe.directory /__w/btp-auto-setup/btp-auto-setup
 
       - name: On Pull request
         if: success() || failure()
