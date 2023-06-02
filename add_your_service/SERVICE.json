@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+  "services": [
+    {
+      "name": "xsuaa",
+      "plan": "application",
+      "category": "SERVICE",
+      "targetenvironment": "kymaruntime",
+      "createServiceKeys": [
+        "xsuaa-application"
+      ],
+      "api_resource_uri": {
+        "testapi": "/sap/rest/authorization/v2/ownapp",
+        "apiBaseUrlPathKey": "data.apiurl",
+        "oauthurlPathkey": "data.url",
+        "clientId_basicUN_PathKey": "data.clientid",
+        "clientSecret_basicPW_PathKey": "data.clientsecret",
+        "authMethod": "oauth",
+        "APITest": "yes",
+        "serviceID": "SERVICE-92"
+      }
+    }
+  ],
+  "enableAPITest": true
+}
