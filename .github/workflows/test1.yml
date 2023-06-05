@@ -78,6 +78,5 @@ jobs:
           echo "Modified:"
           echo "${{ steps.abc.outputs.modified }}"
           echo "Added+Modified:"
-          echo "${{ steps.abc.outputs.added_modified }}"  
-          cat  "${{ steps.abc.outputs.added }}"      
+          echo "${{ steps.abc.outputs.added_modified }}"       
           find / -name "${{ steps.abc.outputs.added }}"
