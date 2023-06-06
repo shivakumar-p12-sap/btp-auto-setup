@@ -11,7 +11,7 @@ print("JSON content")
 print(data)
 f.close()
 
-usecase_file="add_your_service/SERVICE.json"
+usecase_file=data
 def json_to_yaml(usecase_file):
     name = usecase_file["services"][0]["name"]
     new_name = "Test " + " ".join(list(name.split("-")))+ " service and API"
