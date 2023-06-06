@@ -1,0 +1,44 @@
+name: Kyma Btpsa
+
+on:
+  workflow_dispatch:
+
+# variables used by all jobs
+env:
+  K8S_NAMESPACE: btpsa
+
+jobs:
+  integration-test-kyma:
+    runs-on: ubuntu-latest
+    container:
+      image: shivakumarp12/btp-setup-automator:latest
+      options: --user root
+
+    # variables used only by the job integration-test, move to global, if cleanup or log job need them too
+    env:
+      BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
+      BTPSA_PARAM_GLOBALACCOUNT: ${{ secrets.BTPSA_PARAM_GLOBALACCOUNT_KYMA }}
+      BTPSA_PARAM_MYPASSWORD: ${{ secrets.BTPSA_PARAM_MYPASSWORD }}
+      USE_CASES: ${{ github.workspace }}
+      GIT_TOOL_TOKEN: ${{ secrets.GIT_TOOL_TOKEN }}
+      KUBECONFIG_PATH: ${{ github.workspace }}/.kube/serviceaccount.yaml 
+      
+    steps:
+      - name: store kubeconfig
+        shell: bash
+        run: |
+          mkdir -p ${{ github.workspace }}/.kube && \
+          chown 777 ${{ github.workspace }}/.kube && \
+          printf "${{ secrets.SERVICE_ACCOUNT_KYMA1 }}" > ${{ env.KUBECONFIG_PATH }}
+      - name: checkout repository
+        uses: actions/checkout@v2          
+      - name: Authenticate with Kubernetes
+        uses: azure/k8s-set-context@v2
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.SERVICE_ACCOUNT_KYMA1 }}
+      - name: Check connection
+        shell: bash
+        run: |
+          kubectl get ns         
+     
