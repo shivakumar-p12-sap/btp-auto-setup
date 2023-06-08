@@ -571,21 +571,21 @@ jobs:
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/hana-hdi-shared.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/hana-hdi-shared.json                  
         
-      # - name: 'Test identity service and API'
-      #   if: success() || failure()
-      #   working-directory: /home/user
-      #   shell: bash
-      #   run: |
-      #     kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-      #     cat "${USE_CASES}/use_cases/SERVICE-kyma-identity-application-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json       
-      #     set +e
-      #     python3 btpsa \
-      #     -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
-      #     -usecasefile kymausecase.json \
-      #     -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-      #     -k8snamespace ${{ env.K8S_NAMESPACE }} 
-      #     [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/identity-application.log
-      #     [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/identity-application.json 
+      - name: 'Test identity service and API'
+        if: success() || failure()
+        working-directory: /home/user
+        shell: bash
+        run: |
+          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+          cat "${USE_CASES}/use_cases/SERVICE-kyma-identity-application-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json       
+          set +e
+          python3 btpsa \
+          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+          -usecasefile kymausecase.json \
+          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          -k8snamespace ${{ env.K8S_NAMESPACE }} 
+          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/identity-application.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/identity-application.json 
 
       - name: 'Test Malware scanner service and API'
         if: success() || failure()
