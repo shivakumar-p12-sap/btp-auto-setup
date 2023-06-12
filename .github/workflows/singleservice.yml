@@ -1,4 +1,4 @@
-name: Kyma Btpsa
+name: Single service Btpsa
 
 on:
   workflow_dispatch:

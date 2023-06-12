@@ -81,6 +81,7 @@ for logfile in log_files:
       json_decoded = json.load(f)
       if len(json_decoded) > 0:
         json_decoded[0]['reference']=Indian_time
+        json_decoded[0]['platform']=sys.argv[2]
         if sys.argv[2] == "k8s":
           json_decoded[0]['loglink']='https://github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/blob/main/logs/k8s/'+logfile
           historylink="https://pages.github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report/k8s/history.html"
