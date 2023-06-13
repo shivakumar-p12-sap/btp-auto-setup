@@ -931,7 +931,7 @@ jobs:
           rm /home/user/logs/k8s/report/index.html
           cp ${USE_CASES}/script/template_k8s_index.html /home/user/config/templates/report/index.html
           cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
-          commitmessage=`echo "Log Commit $(TZ=IST-5:30 date +%F_%T) IST"`          
+          commitmessage=`echo "k8s Log Commit $(TZ=IST-5:30 date +%F_%T) IST"`          
           python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "k8s" "$commitmessage"
           cp /home/user/logs/k8s/report/* /home/user/crossconsumption-report/logs/k8s/ 
           cp /home/user/crossconsumption-report/logs/k8s/index.html /home/user/crossconsumption-report/docs/k8s/ 
