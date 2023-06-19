@@ -57,6 +57,24 @@ jobs:
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/alert-notification-standard.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
+          
+      - name: 'Test Aderestapi service and API'
+        timeout-minutes: 5
+        if: success() || failure()
+        working-directory: /home/user
+        shell: bash
+        run: |
+          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+          cat "${USE_CASES}/use_cases/SERVICE-kyma-adsrestapi-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+          set +e
+          python3 btpsa \
+          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+          -usecasefile kymausecase.json \
+          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          -k8snamespace ${{ env.K8S_NAMESPACE }} 
+          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/adsrestapi-standard.log
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/adsrestapi-standard.json 
+          
       #cloud management service
       - name: 'Test cis service and API'
         if: success() || failure()
@@ -136,23 +154,7 @@ jobs:
           -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
           -k8snamespace ${{ env.K8S_NAMESPACE }} 
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/auditlog-standard.log
-          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-standard.json
-
-      - name: 'Test Aderestapi service and API'
-        if: success() || failure()
-        working-directory: /home/user
-        shell: bash
-        run: |
-          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "${USE_CASES}/use_cases/SERVICE-kyma-adsrestapi-standard-use-case.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
-          set +e
-          python3 btpsa \
-          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
-          -usecasefile kymausecase.json \
-          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
-          -k8snamespace ${{ env.K8S_NAMESPACE }} 
-          [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/adsrestapi-standard.log
-          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/adsrestapi-standard.json          
+          [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/auditlog-standard.json         
 
       - name: 'Test Business logging service and API'
         if: success() || failure()
@@ -923,28 +925,28 @@ jobs:
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/xsuaa-application.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/xsuaa-application.json          
           
-      - name: 'Upload reports'
-        if: success() || failure()
-        working-directory: /home/user
-        shell: bash
-        run: |
-          git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
-          rm /home/user/logs/k8s/report/index.html
-          cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
-          cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
-          commitmessage=`echo "kyma Log Commit $(TZ=IST-5:30 date +%F_%T) IST"`
-          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma" "$commitmessage"
-          cp /home/user/logs/k8s/report/* /home/user/crossconsumption-report/logs/ 
-          cp /home/user/crossconsumption-report/logs/index.html /home/user/crossconsumption-report/docs/ 
-          cp /home/user/crossconsumption-report/logs/history.html /home/user/crossconsumption-report/docs/ 
-          cd crossconsumption-report
-          git config --global user.name "E2EVal-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "$commitmessage"
-          git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
-          git push
-          
+  #    - name: 'Upload reports'
+  #      if: success() || failure()
+  #      working-directory: /home/user
+  #      shell: bash
+  #      run: |
+  #        git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
+  #        rm /home/user/logs/k8s/report/index.html
+  #        cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
+  #        cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
+  #        commitmessage=`echo "kyma Log Commit $(TZ=IST-5:30 date +%F_%T) IST"`
+  #        python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma" "$commitmessage"
+  #        cp /home/user/logs/k8s/report/* /home/user/crossconsumption-report/logs/ 
+  #        cp /home/user/crossconsumption-report/logs/index.html /home/user/crossconsumption-report/docs/ 
+  #        cp /home/user/crossconsumption-report/logs/history.html /home/user/crossconsumption-report/docs/ 
+  #        cd crossconsumption-report
+  #        git config --global user.name "E2EVal-actions[bot]"
+  #        git config user.email "github-actions[bot]@users.noreply.github.com"
+  #        git add .
+  #        git commit -m "$commitmessage"
+  #        git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
+  #        git push
+  #        
   # integration-test-gardner:
   #   runs-on: ubuntu-latest
   #   container:
