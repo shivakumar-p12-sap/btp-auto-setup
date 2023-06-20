@@ -11,7 +11,7 @@ jobs:
   integration-test-kyma:
     runs-on: ubuntu-latest
     container:
-      image: shivakumarp12/btp-setup-automator:latest
+      image: shivakumarp12/btp-setup-automator:test
       options: --user root
 
     # variables used only by the job integration-test, move to global, if cleanup or log job need them too
@@ -59,7 +59,6 @@ jobs:
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/alert-notification-standard.json
           
       - name: 'Test Aderestapi service and API'
-        timeout-minutes: 5
         if: success() || failure()
         working-directory: /home/user
         shell: bash
@@ -925,28 +924,28 @@ jobs:
           [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/xsuaa-application.log
           [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/xsuaa-application.json          
           
-  #    - name: 'Upload reports'
-  #      if: success() || failure()
-  #      working-directory: /home/user
-  #      shell: bash
-  #      run: |
-  #        git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
-  #        rm /home/user/logs/k8s/report/index.html
-  #        cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
-  #        cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
-  #        commitmessage=`echo "kyma Log Commit $(TZ=IST-5:30 date +%F_%T) IST"`
-  #        python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma" "$commitmessage"
-  #        cp /home/user/logs/k8s/report/* /home/user/crossconsumption-report/logs/ 
-  #        cp /home/user/crossconsumption-report/logs/index.html /home/user/crossconsumption-report/docs/ 
-  #        cp /home/user/crossconsumption-report/logs/history.html /home/user/crossconsumption-report/docs/ 
-  #        cd crossconsumption-report
-  #        git config --global user.name "E2EVal-actions[bot]"
-  #        git config user.email "github-actions[bot]@users.noreply.github.com"
-  #        git add .
-  #        git commit -m "$commitmessage"
-  #        git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
-  #        git push
-  #        
+      - name: 'Upload reports'
+        if: success() || failure()
+        working-directory: /home/user
+        shell: bash
+        run: |
+          git clone https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
+          rm /home/user/logs/k8s/report/index.html
+          cp ${USE_CASES}/script/template_index.html /home/user/config/templates/report/index.html
+          cp ${USE_CASES}/script/history.html /home/user/config/templates/report/history.html
+          commitmessage=`echo "kyma Log Commit $(TZ=IST-5:30 date +%F_%T) IST"`
+          python3 ${USE_CASES}/script/consolidator.py ${GIT_TOOL_TOKEN} "kyma" "$commitmessage"
+          cp /home/user/logs/k8s/report/* /home/user/crossconsumption-report/logs/ 
+          cp /home/user/crossconsumption-report/logs/index.html /home/user/crossconsumption-report/docs/ 
+          cp /home/user/crossconsumption-report/logs/history.html /home/user/crossconsumption-report/docs/ 
+          cd crossconsumption-report
+          git config --global user.name "E2EVal-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "$commitmessage"
+          git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
+          git push
+          
   # integration-test-gardner:
   #   runs-on: ubuntu-latest
   #   container:
