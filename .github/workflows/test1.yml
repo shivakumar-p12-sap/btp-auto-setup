@@ -80,11 +80,11 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2    
 
-          - uses: jitterbit/get-changed-files@v1
-          id: abc
-          with:
-            format: json
-            token: ${{ secrets.GIT_COM_TOKEN }}
+      - uses: jitterbit/get-changed-files@v1
+        id: abc
+        with:
+          format: json
+          token: ${{ secrets.GIT_COM_TOKEN }}
       - name: Printing
         run: |     
           echo "All:"
@@ -100,8 +100,6 @@ jobs:
           echo "Added+Modified:"
           echo "${{ steps.abc.outputs.added_modified }}"  
           ls ${{ github.workspace }} 
-          ls -l
-          cd ..
           ls -l
           set +e
           python3 ${USE_CASES}/script/singleuser.py "${{ steps.abc.outputs.added_modified }}" "${{ github.workspace }}"
