@@ -57,14 +57,14 @@ jobs:
           pwd
 
           
-      - name: 'Test single service test and API'
-        if: success() || failure()
-        working-directory: /home/user
-        shell: bash
-        run: |
-          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
-          cat "add_your_service/SERVICE.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
-          cat kymausecase.json
+      # - name: 'Test single service test and API'
+      #   if: success() || failure()
+      #   working-directory: /home/user
+      #   shell: bash
+      #   run: |
+      #     kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+      #     cat "add_your_service/SERVICE.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+      #     cat kymausecase.json
         # set +e 
         # python3 btpsa \
         # -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
