@@ -77,6 +77,25 @@ jobs:
           echo "${{ steps.abc.outputs.added_modified }}"  
           ls ${{ github.workspace }} 
           ls -l
+          cd ..
+          ls -l
+          set +e
           python3 ${USE_CASES}/script/singleuser.py "${{ steps.abc.outputs.added_modified }}" "${{ github.workspace }}"
           
+      - name: 'Test single service test and API'
+        if: success() || failure()
+        working-directory: /home/user
+        shell: bash
+        run: |
+          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+          cat "add_your_service/SERVICE.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+          cat kymausecase.json
+        # set +e 
+        # python3 btpsa \
+        # -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+        # -usecasefile kymausecase.json \
+        # -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+        # -k8snamespace ${{ env.K8S_NAMESPACE }} 
+        # [ -f "/home/user/log/script.log" ] && mv /home/user/log/script.log /home/user/logs/k8s/report/xfs-runtime-sandbox-default.log
+        # [ -f "/home/user/logs/k8s/report/apitestresult.json" ] && mv /home/user/logs/k8s/report/apitestresult.json /home/user/logs/k8s/report/xfs-runtime-sandbox-default.json           
         #cat .github/workflows/singleservice.yml
