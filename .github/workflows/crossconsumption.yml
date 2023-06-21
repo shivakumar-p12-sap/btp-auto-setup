@@ -11,7 +11,7 @@ jobs:
   integration-test-gardner:
     runs-on: ubuntu-latest
     container:
-      image: shivakumarp12/btp-setup-automator:latest
+      image: shivakumarp12/btp-setup-automator:test
       options: --user root
     env:
       BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
@@ -937,9 +937,10 @@ jobs:
           cp /home/user/crossconsumption-report/logs/k8s/index.html /home/user/crossconsumption-report/docs/k8s/ 
           cp /home/user/crossconsumption-report/logs/k8s/history.html /home/user/crossconsumption-report/docs/k8s/ 
           cd crossconsumption-report
-          git config --global user.name "E2EVal-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "$commitmessage"
-          git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
-          git push          
+          ls -l ./logs/k8s
+         # git config --global user.name "E2EVal-actions[bot]"
+         # git config user.email "github-actions[bot]@users.noreply.github.com"
+         # git add .
+         # git commit -m "$commitmessage"
+         # git remote set-url origin https://${GIT_TOOL_TOKEN}@github.tools.sap/BTP-E2EScenarioValidation/crossconsumption-report.git
+         # git push          
