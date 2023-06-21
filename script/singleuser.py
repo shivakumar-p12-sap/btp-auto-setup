@@ -13,7 +13,7 @@ print("JSON content")
 print(result)
 
 
-usecase_file=result
+usecase_file=json.load(result)
 def json_to_yaml(usecase_file):
     print("IN function")
     current_working_directory = os.getcwd()
