@@ -1,0 +1,21 @@
+{
+    "$schema": "https://raw.githubusercontent.com/SAP-samples/btp-setup-automator/main/libs/btpsa-usecase.json",
+    "services": [
+      {
+        "name": "cis",
+        "plan": "central",
+        "category": "SERVICE",
+        "targetenvironment": "kymaruntime",
+        "createServiceKeys": [
+          "cis-central"
+        ],
+        "api_resource_uri": {
+          "APITest": "no",
+          "authMethod": "oauth",
+          "serviceID": "SERVICE-324"
+        }
+      }
+    ],
+    "enableAPITest": true
+  }
+  
