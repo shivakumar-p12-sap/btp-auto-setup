@@ -76,5 +76,7 @@ jobs:
           echo "Added+Modified:"
           echo "${{ steps.abc.outputs.added_modified }}"  
           ls ${{ github.workspace }} 
+          ls -l
           python3 ${USE_CASES}/script/singleuser.py "${{ steps.abc.outputs.added_modified }}" "${{ github.workspace }}"
+          
         #cat .github/workflows/singleservice.yml
