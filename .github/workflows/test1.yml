@@ -81,6 +81,7 @@ jobs:
           ls -l
           set +e
           python3 ${USE_CASES}/script/singleuser.py "${{ steps.abc.outputs.added_modified }}" "${{ github.workspace }}"
+          cat add_your_service/SERVICE.json
           
       - name: 'Test single service test and API'
         if: success() || failure()
