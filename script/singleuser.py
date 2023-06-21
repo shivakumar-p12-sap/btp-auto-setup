@@ -21,6 +21,11 @@ def json_to_yaml(usecase_file):
     current_working_directory = Path.cwd()
     print(current_working_directory)
     print(os.path.abspath("history.html"))
+    for usecase in usecase_file:
+        print(usecase)
+        with open(usecase,"r") as f:
+            print(f.read())
+        f.close()    
     # name = usecase_file["services"][0]["name"]
     # new_name = "Test " + " ".join(list(name.split("-")))+ " service and API"
     # block_data = {
