@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 print("Single script")
-result=json.load(sys.argv[1])
+result=sys.argv[1]
 print("JSON content")
 print(result)
 
