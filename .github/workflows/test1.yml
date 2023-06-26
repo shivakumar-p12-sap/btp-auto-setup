@@ -73,6 +73,9 @@ jobs:
           format: json
           token: ${{ secrets.GIT_COM_TOKEN }}
       - name: Printing
+        if: success() || failure()
+        working-directory: /home/user
+        shell: bash      
         run: |     
           echo "All:"
           echo "${{ steps.abc.outputs.all }}"
