@@ -91,7 +91,16 @@ jobs:
           set +e
           python3 ${USE_CASES}/script/singleuser.py "${{ steps.abc.outputs.added_modified }}" "${{ github.workspace }}"
           ls -l add_your_service
-          cat add_your_service/SERVICE.json          
+          cat add_your_service/SERVICE.json    
+          kymaenv=`cat "${USE_CASES}/use_cases/kyma-usecase-environment.json"`
+          cat "add_your_service/SERVICE.json" | jq --argjson a "${kymaenv}" '.services += [$a]' > kymausecase.json
+          cat kymausecase.json
+          set +e 
+          python3 btpsa \
+          -parameterfile "${USE_CASES}/use_cases/kyma-usecase-parameters.json" \
+          -usecasefile kymausecase.json \
+          -kubeconfigpath ${{ env.KUBECONFIG_PATH}} \
+          -k8snamespace ${{ env.K8S_NAMESPACE }}                  
 
       - name: 'Test single service test and API'
         if: success() || failure()
