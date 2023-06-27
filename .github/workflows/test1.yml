@@ -15,6 +15,9 @@ jobs:
     container:
       image: shivakumarp12/btp-setup-automator:latest
       options: --user root
+    defaults:
+      run: 
+        working-directory: /home/user
 
     env:
       BTPSA_PARAM_MYEMAIL: ${{ secrets.BTPSA_PARAM_MYEMAIL }}
